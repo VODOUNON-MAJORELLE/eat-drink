@@ -13,11 +13,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Créer l'administrateur par défaut
+        User::create([
+            'nom_entreprise' => 'Administration Eat&Drink',
+            'email' => 'admin@eatanddrink.com',
+            'password' => bcrypt('admin123'),
+            'role' => User::ROLE_ADMIN,
+            'statut' => User::STATUT_APPROUVE,
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Créer quelques entrepreneurs de test (optionnel)
+        User::create([
+            'nom_entreprise' => 'Restaurant Le Gourmet',
+            'email' => 'gourmet@test.com',
+            'password' => bcrypt('password'),
+            'role' => User::ROLE_ENTREPRENEUR_EN_ATTENTE,
+            'statut' => User::STATUT_EN_ATTENTE,
+        ]);
+
+        User::create([
+            'nom_entreprise' => 'Boulangerie Artisanale',
+            'email' => 'boulangerie@test.com',
+            'password' => bcrypt('password'),
+            'role' => User::ROLE_ENTREPRENEUR_APPROUVE,
+            'statut' => User::STATUT_APPROUVE,
         ]);
     }
 }
