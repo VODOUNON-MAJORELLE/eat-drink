@@ -68,20 +68,20 @@
                         <a href="/" class="text-white/90 hover:text-white transition-colors font-medium">
                             Accueil
                         </a>
-                        <a href="#" class="text-white/90 hover:text-white transition-colors font-medium">
+                        <a href="{{ route('public.exposants') }}" class="text-white/90 hover:text-white transition-colors font-medium">
                             Nos Exposants
                         </a>
                         @auth
                             @if(auth()->user()->role === 'admin')
-                                <a href="#" class="text-white/90 hover:text-white transition-colors font-medium">
+                                <a href="{{ route('admin.dashboard') }}" class="text-white/90 hover:text-white transition-colors font-medium">
                                     Administration
                                 </a>
                             @elseif(auth()->user()->role === 'entrepreneur_approuve')
-                                <a href="#" class="text-white/90 hover:text-white transition-colors font-medium">
+                                <a href="{{ route('entrepreneur.dashboard') }}" class="text-white/90 hover:text-white transition-colors font-medium">
                                     Mon Stand
                                 </a>
                             @else
-                                <a href="#" class="text-white/90 hover:text-white transition-colors font-medium">
+                                <a href="{{ route('entrepreneur.statut') }}" class="text-white/90 hover:text-white transition-colors font-medium">
                                     Statut de ma demande
                                 </a>
                             @endif
@@ -130,7 +130,7 @@
                 
                 <!-- CTA Buttons -->
                 <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                    <a href="#" class="bg-white text-purple-600 hover:bg-gray-50 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                    <a href="{{ route('public.exposants') }}" class="bg-white text-purple-600 hover:bg-gray-50 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
                         Découvrir nos exposants
                     </a>
                     @guest
