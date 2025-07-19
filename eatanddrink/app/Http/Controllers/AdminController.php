@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Stand;
 use App\Models\Order;
+use App\Mail\DemandeApprouvee;
+use App\Mail\DemandeRejetee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -71,6 +74,9 @@ class AdminController extends Controller
 
             DB::commit();
 
+            // Envoyer un email de notification
+            Mail::to($user->email)->send(new DemandeApprouvee($user));
+
             return back()->with('success', 'La demande de ' . $user->nom_entreprise . ' a été approuvée avec succès.');
 
         } catch (\Exception $e) {
@@ -99,8 +105,8 @@ class AdminController extends Controller
                 'statut' => User::STATUT_REJETE,
             ]);
 
-            // Ici on pourrait envoyer un email de notification
-            // Mail::to($user->email)->send(new DemandeRejetee($request->motif_rejet));
+            // Envoyer un email de notification
+            Mail::to($user->email)->send(new DemandeRejetee($user, $request->motif_rejet));
 
             return back()->with('success', 'La demande de ' . $user->nom_entreprise . ' a été rejetée.');
 
