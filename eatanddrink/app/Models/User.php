@@ -19,11 +19,16 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'nom_entreprise',
+        'name',
         'email',
         'password',
         'role',
-        'statut',
+        'phone',
+        'company_name',
+        'activity_type',
+        'specialties',
+        'description',
+        'experience',
     ];
 
     /**
@@ -53,15 +58,8 @@ class User extends Authenticatable
      * Constantes pour les rôles
      */
     const ROLE_ADMIN = 'admin';
-    const ROLE_ENTREPRENEUR_EN_ATTENTE = 'entrepreneur_en_attente';
-    const ROLE_ENTREPRENEUR_APPROUVE = 'entrepreneur_approuve';
-
-    /**
-     * Constantes pour les statuts
-     */
-    const STATUT_EN_ATTENTE = 'en_attente';
-    const STATUT_APPROUVE = 'approuve';
-    const STATUT_REJETE = 'rejete';
+    const ROLE_ENTREPRENEUR = 'entrepreneur';
+    const ROLE_PARTICIPANT = 'participant';
 
     /**
      * Vérifie si l'utilisateur est admin
@@ -72,27 +70,19 @@ class User extends Authenticatable
     }
 
     /**
-     * Vérifie si l'utilisateur est entrepreneur approuvé
+     * Vérifie si l'utilisateur est entrepreneur
      */
-    public function isEntrepreneurApprouve(): bool
+    public function isEntrepreneur(): bool
     {
-        return $this->role === self::ROLE_ENTREPRENEUR_APPROUVE;
+        return $this->role === self::ROLE_ENTREPRENEUR;
     }
 
     /**
-     * Vérifie si l'utilisateur est entrepreneur en attente
+     * Vérifie si l'utilisateur est participant
      */
-    public function isEntrepreneurEnAttente(): bool
+    public function isParticipant(): bool
     {
-        return $this->role === self::ROLE_ENTREPRENEUR_EN_ATTENTE;
-    }
-
-    /**
-     * Vérifie si la demande de l'utilisateur est approuvée
-     */
-    public function isApprouve(): bool
-    {
-        return $this->statut === self::STATUT_APPROUVE;
+        return $this->role === self::ROLE_PARTICIPANT;
     }
 
     /**
@@ -101,5 +91,31 @@ class User extends Authenticatable
     public function stand(): HasOne
     {
         return $this->hasOne(Stand::class);
+    }
+
+    /**
+     * Obtient le nom complet de l'utilisateur
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Obtient le prénom de l'utilisateur
+     */
+    public function getFirstNameAttribute(): string
+    {
+        $parts = explode(' ', $this->name);
+        return $parts[0] ?? '';
+    }
+
+    /**
+     * Obtient le nom de famille de l'utilisateur
+     */
+    public function getLastNameAttribute(): string
+    {
+        $parts = explode(' ', $this->name);
+        return count($parts) > 1 ? implode(' ', array_slice($parts, 1)) : '';
     }
 }
