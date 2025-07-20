@@ -1,227 +1,238 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Eat&Drink - Événement Culinaire</title>
+@extends('layouts.app')
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
-
-        <!-- Styles / Scripts -->
-        @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-            @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @endif
-
-        <style>
-            .gradient-bg {
-                background: linear-gradient(135deg, #ff6b35 0%, #f7931e 25%, #8b5cf6 75%, #7c3aed 100%);
-            }
-            .gradient-text {
-                background: linear-gradient(135deg, #ff6b35, #8b5cf6);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-            .floating-shape {
-                animation: float 6s ease-in-out infinite;
-            }
-            .floating-shape-2 {
-                animation: float 8s ease-in-out infinite reverse;
-            }
-            @keyframes float {
-                0%, 100% { transform: translateY(0px) rotate(0deg); }
-                50% { transform: translateY(-20px) rotate(5deg); }
-            }
-            .glass-effect {
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-            }
-        </style>
-    </head>
-    <body class="min-h-screen overflow-x-hidden">
-        <!-- Background with floating shapes -->
-        <div class="fixed inset-0 gradient-bg">
-            <!-- Floating decorative shapes -->
-            <div class="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full floating-shape"></div>
-            <div class="absolute top-40 right-20 w-24 h-24 bg-purple-300/20 rounded-full floating-shape-2"></div>
-            <div class="absolute bottom-40 left-20 w-40 h-40 bg-orange-300/15 rounded-full floating-shape"></div>
-            <div class="absolute bottom-20 right-10 w-20 h-20 bg-white/10 rounded-full floating-shape-2"></div>
-            <div class="absolute top-1/2 left-1/4 w-16 h-16 bg-purple-400/20 rounded-full floating-shape"></div>
+@section('content')
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🎪 EAT&DRINK Carnaval Festival 6</h1>
+            <p>Découvrez les saveurs du monde dans une atmosphère festive et colorée. Le plus grand événement culinaire de Cotonou vous attend !</p>
+            <div class="hero-buttons">
+                <a href="{{ route('exposants') }}" class="btn-primary">
+                    <i class="fas fa-store"></i>
+                    Découvrir les stands
+                </a>
+                <a href="#programme" class="btn-secondary">
+                    <i class="fas fa-calendar-alt"></i>
+                    Programme complet
+                </a>
+                @guest
+                    <a href="{{ route('register') }}" class="btn-outline">
+                        <i class="fas fa-plus"></i>
+                        Rejoindre comme exposant
+                    </a>
+                @endguest
+            </div>
         </div>
+    </section>
 
-        <!-- Navigation -->
-        <nav class="relative z-50 glass-effect m-4 rounded-2xl">
-            <div class="max-w-7xl mx-auto px-6 py-4">
-                <div class="flex justify-between items-center">
-                    <!-- Logo -->
-                    <div class="flex items-center">
-                        <h1 class="text-3xl font-bold text-white">
-                            🍽️ Eat&Drink
-                        </h1>
+    <!-- Statistiques -->
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-store"></i>
                     </div>
-
-                    <!-- Navigation Links -->
-                    <div class="hidden md:flex items-center space-x-8">
-                        <a href="/" class="text-white/90 hover:text-white transition-colors font-medium">
-                            Accueil
-                        </a>
-                        <a href="{{ route('public.exposants') }}" class="text-white/90 hover:text-white transition-colors font-medium">
-                            Nos Exposants
-                        </a>
-                        @auth
-                            @if(auth()->user()->role === 'admin')
-                                <a href="{{ route('admin.dashboard') }}" class="text-white/90 hover:text-white transition-colors font-medium">
-                                    Administration
-                                </a>
-                            @elseif(auth()->user()->role === 'entrepreneur_approuve')
-                                <a href="{{ route('entrepreneur.dashboard') }}" class="text-white/90 hover:text-white transition-colors font-medium">
-                                    Mon Stand
-                                </a>
-                            @else
-                                <a href="{{ route('entrepreneur.statut') }}" class="text-white/90 hover:text-white transition-colors font-medium">
-                                    Statut de ma demande
-                                </a>
-                            @endif
-                        @endauth
+                    <div class="stat-number" id="stands-count">
+                        {{ App\Models\Stand::count() }}+
                     </div>
-
-                    <!-- Auth Buttons -->
-                    <div class="flex items-center space-x-4">
-                        @auth
-                            <a href="{{ route('dashboard') }}" class="bg-white/20 hover:bg-white/30 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 backdrop-blur-sm">
-                                Dashboard
-                            </a>
-                            <form method="POST" action="{{ route('logout') }}" class="inline">
-                                @csrf
-                                <button type="submit" class="text-white/90 hover:text-white transition-colors font-medium">
-                                    Déconnexion
-                                </button>
-                            </form>
-                        @else
-                            <a href="{{ route('login') }}" class="text-white/90 hover:text-white transition-colors font-medium">
-                                Connexion
-                            </a>
-                            <a href="{{ route('register') }}" class="bg-white text-purple-600 hover:bg-gray-50 px-6 py-2 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
-                                Demander un Stand
-                            </a>
-                        @endauth
+                    <div class="stat-label">Stands Culinaires</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-utensils"></i>
                     </div>
+                    <div class="stat-number" id="products-count">
+                        {{ App\Models\Product::count() }}+
+                    </div>
+                    <div class="stat-label">Plats & Boissons</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number" id="visitors-count">50K+</div>
+                    <div class="stat-label">Visiteurs Attendus</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="stat-number" id="countries-count">25+</div>
+                    <div class="stat-label">Cuisines du Monde</div>
                 </div>
             </div>
-        </nav>
+        </div>
+    </section>
 
-        <!-- Hero Section -->
-        <div class="relative z-10 min-h-screen flex items-center justify-center px-6">
-            <div class="text-center max-w-4xl mx-auto">
-                <!-- Main Title -->
-                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-                    Bienvenue à
-                    <span class="block gradient-text">Eat&Drink</span>
-                </h1>
-                
-                <!-- Subtitle -->
-                <p class="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed">
-                    L'événement culinaire qui rassemble les meilleurs restaurateurs et artisans. 
-                    Découvrez des saveurs uniques et des créations gastronomiques exceptionnelles.
-                </p>
-                
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                    <a href="{{ route('public.exposants') }}" class="bg-white text-purple-600 hover:bg-gray-50 px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                        Découvrir nos exposants
-                    </a>
+    <!-- Catégories -->
+    <section class="categories-section">
+        <div class="section-header">
+            <h2 class="section-title">🍽️ Nos Catégories Culinaires</h2>
+            <p class="section-subtitle">Un voyage gustatif à travers les continents</p>
+        </div>
+        <div class="categories-grid">
+            <div class="category-card">
+                <div class="category-image">
+                    🍕
+                </div>
+                <div class="category-content">
+                    <h3 class="category-title">Cuisine Européenne</h3>
+                    <p class="category-description">Pizza, pâtes, crêpes et spécialités méditerranéennes</p>
+                    <span class="category-count">25 stands</span>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-image">
+                    🍛
+                </div>
+                <div class="category-content">
+                    <h3 class="category-title">Cuisine Africaine</h3>
+                    <p class="category-description">Plats traditionnels et saveurs authentiques du continent</p>
+                    <span class="category-count">40 stands</span>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-image">
+                    🍜
+                </div>
+                <div class="category-content">
+                    <h3 class="category-title">Cuisine Asiatique</h3>
+                    <p class="category-description">Sushi, nouilles, curry et délices orientaux</p>
+                    <span class="category-count">30 stands</span>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-image">
+                    🌮
+                </div>
+                <div class="category-content">
+                    <h3 class="category-title">Cuisine Latino</h3>
+                    <p class="category-description">Tacos, empanadas et saveurs d'Amérique latine</p>
+                    <span class="category-count">20 stands</span>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-image">
+                    🧃
+                </div>
+                <div class="category-content">
+                    <h3 class="category-title">Boissons & Cocktails</h3>
+                    <p class="category-description">Jus frais, cocktails et boissons du monde</p>
+                    <span class="category-count">25 stands</span>
+                </div>
+            </div>
+            <div class="category-card">
+                <div class="category-image">
+                    🍰
+                </div>
+                <div class="category-content">
+                    <h3 class="category-title">Desserts & Pâtisseries</h3>
+                    <p class="category-description">Gâteaux, chocolats et douceurs sucrées</p>
+                    <span class="category-count">15 stands</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Rejoindre comme Exposant -->
+    <section class="join-section">
+        <div class="join-container">
+            <div class="join-content">
+                <h2>🎪 Vous êtes un entrepreneur culinaire ?</h2>
+                <p>Rejoignez le plus grand festival culinaire de Cotonou et présentez vos spécialités à des milliers de visiteurs !</p>
+                <div class="join-benefits">
+                    <div class="benefit-item">
+                        <i class="fas fa-users"></i>
+                        <span>Exposition à 50,000+ visiteurs</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Augmentation de votre visibilité</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-handshake"></i>
+                        <span>Opportunités de partenariats</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-star"></i>
+                        <span>Reconnaissance de votre expertise</span>
+                    </div>
+                </div>
+                <div class="join-actions">
                     @guest
-                        <a href="{{ route('register') }}" class="bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
+                        <a href="{{ route('register') }}" class="btn-primary">
+                            <i class="fas fa-plus"></i>
                             Demander un stand
                         </a>
+                    @else
+                        @if(auth()->user()->role === 'entrepreneur')
+                            <a href="{{ route('entrepreneur.dashboard') }}" class="btn-primary">
+                                <i class="fas fa-tachometer-alt"></i>
+                                Mon Tableau de Bord
+                            </a>
+                        @else
+                            <a href="{{ route('register') }}" class="btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Demander un stand
+                            </a>
+                        @endif
                     @endguest
+                    <a href="{{ route('exposants') }}" class="btn-secondary">
+                        <i class="fas fa-eye"></i>
+                        Voir les exposants
+                    </a>
+                </div>
+            </div>
+            <div class="join-image">
+                <div class="image-placeholder">
+                    <i class="fas fa-utensils"></i>
+                    <p>Votre stand vous attend !</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Features Section -->
-        <div class="relative z-10 py-24 px-6">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-20">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                        Pourquoi participer à 
-                        <span class="gradient-text">Eat&Drink</span> ?
-                    </h2>
-                    <p class="text-xl text-white/80 max-w-2xl mx-auto">
-                        Une plateforme moderne pour connecter exposants et visiteurs
-                    </p>
+    <!-- Informations Pratiques -->
+    <section class="info-section" id="infos">
+        <div class="section-header">
+            <h2 class="section-title">📅 Informations Pratiques</h2>
+            <p class="section-subtitle">Tout ce que vous devez savoir pour votre visite</p>
+        </div>
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-calendar-alt"></i>
                 </div>
-
-                <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Feature 1 -->
-                    <div class="glass-effect p-8 rounded-3xl text-center hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
-                        <div class="w-20 h-20 bg-gradient-to-r from-orange-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <span class="text-3xl">🍽️</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">
-                            Exposition de Qualité
-                        </h3>
-                        <p class="text-white/80 leading-relaxed">
-                            Présentez vos meilleures créations culinaires à un public passionné et exigeant
-                        </p>
-                    </div>
-
-                    <!-- Feature 2 -->
-                    <div class="glass-effect p-8 rounded-3xl text-center hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
-                        <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <span class="text-3xl">💻</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">
-                            Gestion Simplifiée
-                        </h3>
-                        <p class="text-white/80 leading-relaxed">
-                            Gérez vos produits et commandes en ligne avec une interface intuitive et moderne
-                        </p>
-                    </div>
-
-                    <!-- Feature 3 -->
-                    <div class="glass-effect p-8 rounded-3xl text-center hover:bg-white/20 transition-all duration-300 transform hover:scale-105">
-                        <div class="w-20 h-20 bg-gradient-to-r from-orange-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <span class="text-3xl">🎯</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">
-                            Visibilité Maximale
-                        </h3>
-                        <p class="text-white/80 leading-relaxed">
-                            Augmentez votre visibilité auprès d'un large public de passionnés culinaires
-                        </p>
-                    </div>
+                <h3 class="info-title">Dates & Horaires</h3>
+                <div class="info-details">
+                    Du 15 au 17 Mars 2025<br>
+                    10h00 - 22h00<br>
+                    Entrée gratuite
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3 class="info-title">Lieu</h3>
+                <div class="info-details">
+                    Palais des Congrès<br>
+                    Cotonou, Littoral<br>
+                    Parking gratuit
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3 class="info-title">Moyens de Paiement</h3>
+                <div class="info-details">
+                    Espèces • Mobile Money<br>
+                    Cartes bancaires<br>
+                    Paiement en ligne
                 </div>
             </div>
         </div>
-
-        <!-- Footer -->
-        <footer class="relative z-10 py-12 px-6">
-            <div class="max-w-4xl mx-auto text-center">
-                <h3 class="text-3xl font-bold gradient-text mb-6">🍽️ Eat&Drink</h3>
-                <p class="text-white/70 mb-8 text-lg">
-                    L'événement culinaire qui connecte passionnés et professionnels
-                </p>
-                <div class="flex justify-center space-x-8 mb-8">
-                    <a href="#" class="text-white/70 hover:text-white transition-colors">
-                        À propos
-                    </a>
-                    <a href="#" class="text-white/70 hover:text-white transition-colors">
-                        Contact
-                    </a>
-                    <a href="#" class="text-white/70 hover:text-white transition-colors">
-                        Conditions
-                    </a>
-                </div>
-                <div class="pt-8 border-t border-white/20">
-                    <p class="text-white/50 text-sm">
-                        © 2024 Eat&Drink. Tous droits réservés.
-                    </p>
-                </div>
-            </div>
-        </footer>
-    </body>
-</html>
+    </section>
+@endsection
