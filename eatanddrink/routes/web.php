@@ -61,3 +61,8 @@ Route::middleware(['auth', 'entrepreneur'])->prefix('entrepreneur')->name('entre
     Route::get('/commandes', [EntrepreneurController::class, 'commandes'])->name('commandes');
     Route::get('/statut', [EntrepreneurController::class, 'statutDemande'])->name('statut');
 });
+
+// Route pour entrepreneurs en attente
+Route::middleware(['auth'])->group(function () {
+    Route::get('/statut', [EntrepreneurController::class, 'statutDemande'])->name('entrepreneur.statut');
+});

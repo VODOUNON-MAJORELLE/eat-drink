@@ -42,7 +42,7 @@
                     @else
                         <li><a href="{{ route('home') }}">Accueil</a></li>
                         <li><a href="{{ route('exposants') }}">Nos Exposants</a></li>
-                        <li><a href="#programme">Programme</a></li>
+                        <li><a href="{{ route('programme') }}">Programme</a></li>
                         <li><a href="#infos">Infos</a></li>
                     @endauth
                 </nav>

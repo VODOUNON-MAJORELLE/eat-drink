@@ -185,3 +185,5 @@ http://localhost:8000/programme
 **Testé** : ✅ Navigation, calendrier, inscriptions  
 **Responsive** : ✅ Mobile et desktop  
 **Performance** : ✅ Assets optimisés 
+ 
+ 

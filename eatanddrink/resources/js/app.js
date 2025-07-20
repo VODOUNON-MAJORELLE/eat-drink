@@ -5,7 +5,6 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 
 Alpine.start();
-
 // ===== FONCTIONS GLOBALES =====
 
 // Animation au scroll
@@ -74,6 +73,61 @@ function animateStats() {
             }
             stat.textContent = Math.floor(current);
         }, 16);
+    });
+}
+
+// === Eat&Drink Accueil JS ===
+
+// Animation des compteurs
+function animateCounter(id, target) {
+    let current = 0;
+    const increment = target / 100;
+    const element = document.getElementById(id);
+    if (!element) return;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        if (id.includes('count')) {
+            element.textContent = Math.floor(current) + '+';
+        } else {
+            element.textContent = Math.floor(current);
+        }
+    }, 20);
+}
+
+// Observer pour déclencher les animations
+const statsSection = document.querySelector('.stats-section');
+if (statsSection) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounter('stands-count', 150);
+                animateCounter('products-count', 500);
+                animateCounter('visitors-count', 50000);
+                animateCounter('countries-count', 25);
+                observer.disconnect();
+            }
+        });
+    });
+    observer.observe(statsSection);
+}
+
+// Smooth scroll pour les liens d'ancrage
+if (document.querySelectorAll('a[href^="#"]').length) {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
     });
 }
 
@@ -653,3 +707,4 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+

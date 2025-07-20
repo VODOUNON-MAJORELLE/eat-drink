@@ -45,14 +45,14 @@
             @else
                 <div class="text-center py-8">
                     <p class="text-gray-500 mb-4">Aucun résultat trouvé pour "{{ $query }}"</p>
-                    <a href="{{ route('public.exposants') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
+                    <a href="{{ route('exposants') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
                         Voir tous les exposants
                     </a>
                 </div>
             @endif
 
             <div class="mt-8">
-                <a href="{{ route('public.exposants') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
+                <a href="{{ route('exposants') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
                     Retour aux exposants
                 </a>
             </div>

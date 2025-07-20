@@ -1,167 +1,109 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Nos Exposants - Eat&Drink</title>
+@extends('layouts.app')
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
+@section('content')
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>🍽️ Nos Exposants</h1>
+        <p>Découvrez les stands et entrepreneurs qui participent au festival</p>
+    </div>
+</section>
 
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+<!-- Filtres et recherche -->
+<section class="filters-section">
+    <div class="filters-container" style="justify-content:center; align-items:center; gap:2rem; flex-wrap:wrap;">
+        <form method="GET" action="{{ route('exposants') }}" class="search-box" style="flex:1; min-width:300px; position:relative; max-width:400px;">
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Rechercher un exposant..." style="width:100%; padding:1rem 3rem 1rem 1rem; border:2px solid rgba(255,107,53,0.2); border-radius:25px; font-size:1rem; transition:all 0.3s ease; box-shadow:0 2px 10px rgba(255,107,53,0.05);">
+            <i class="fas fa-search" style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); color:var(--gray-dark); opacity:0.6;"></i>
+        </form>
+        <form method="GET" action="{{ route('exposants') }}" class="filter-options" style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
+            <select name="categorie" onchange="this.form.submit()" style="padding:1rem; border:2px solid rgba(255,107,53,0.2); border-radius:25px; font-size:1rem; background:white; min-width:200px;">
+                <option value="">Toutes les catégories</option>
+                <option value="restaurant" {{ request('categorie') == 'restaurant' ? 'selected' : '' }}>Restaurant</option>
+                <option value="catering" {{ request('categorie') == 'catering' ? 'selected' : '' }}>Traiteur</option>
+                <option value="bakery" {{ request('categorie') == 'bakery' ? 'selected' : '' }}>Boulangerie/Pâtisserie</option>
+                <option value="beverages" {{ request('categorie') == 'beverages' ? 'selected' : '' }}>Boissons/Cocktails</option>
+                <option value="street-food" {{ request('categorie') == 'street-food' ? 'selected' : '' }}>Street Food</option>
+                <option value="artisan" {{ request('categorie') == 'artisan' ? 'selected' : '' }}>Artisan culinaire</option>
+            </select>
+            <select name="sort" onchange="this.form.submit()" style="padding:1rem; border:2px solid rgba(255,107,53,0.2); border-radius:25px; font-size:1rem; background:white; min-width:200px;">
+                <option value="nom" {{ request('sort') == 'nom' ? 'selected' : '' }}>Trier par nom</option>
+                <option value="popularity" {{ request('sort') == 'popularity' ? 'selected' : '' }}>Trier par popularité</option>
+                <option value="note" {{ request('sort') == 'note' ? 'selected' : '' }}>Trier par note</option>
+            </select>
+        </form>
+    </div>
+</section>
 
-    <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 25%, #8b5cf6 75%, #7c3aed 100%);
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #ff6b35, #8b5cf6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-    </style>
-</head>
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-50">
-        <!-- Navigation -->
-        <nav class="bg-white shadow-sm border-b">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex items-center">
-                        <a href="/" class="text-2xl font-bold gradient-text">
-                            🍽️ Eat&Drink
-                        </a>
-                    </div>
-
-                    <div class="flex items-center space-x-4">
-                        <a href="/" class="text-gray-600 hover:text-gray-900 transition-colors">
-                            Accueil
-                        </a>
-                        <a href="{{ route('public.exposants') }}" class="text-orange-600 font-medium">
-                            Nos Exposants
-                        </a>
-                        <a href="{{ route('public.panier') }}" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg transition-colors">
-                            🛒 Panier
-                        </a>
-                        @auth
-                            <a href="{{ route('dashboard') }}" class="text-gray-600 hover:text-gray-900 transition-colors">
-                                Dashboard
-                            </a>
-                        @else
-                            <a href="{{ route('login') }}" class="text-gray-600 hover:text-gray-900 transition-colors">
-                                Connexion
-                            </a>
-                        @endauth
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Header -->
-        <div class="bg-gradient-to-r from-orange-500 to-purple-600 text-white py-16">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Nos Exposants</h1>
-                <p class="text-xl text-white/90 max-w-2xl mx-auto">
-                    Découvrez les meilleurs restaurateurs et artisans culinaires de notre événement
-                </p>
+<!-- Grille des exposants -->
+<section class="exposants-section">
+    <div class="exposants-container">
+        <div class="results-info">
+            <div class="results-count">
+                <span id="results-count">{{ $stands->total() }}</span> exposants trouvés
             </div>
         </div>
-
-        <!-- Search Bar -->
-        <div class="bg-white border-b">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-                <form action="{{ route('public.recherche') }}" method="GET" class="max-w-2xl mx-auto">
-                    <div class="flex">
-                        <input type="text" name="q" placeholder="Rechercher un stand, un produit..." 
-                               class="flex-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
-                        <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-r-lg transition-colors">
-                            🔍 Rechercher
-                        </button>
+        <div class="exposants-grid" id="exposants-grid">
+            @forelse($stands as $stand)
+                <div class="exposant-card">
+                    <div class="exposant-image">
+                        {{ $stand->emoji ?? '🍽️' }}
+                        @if($stand->user && $stand->user->statut === 'approuve')
+                            <span class="exposant-badge">✓ Vérifié</span>
+                        @endif
                     </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Content -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            @if(session('success'))
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @if($stands->count() > 0)
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach($stands as $stand)
-                        <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden">
-                            <!-- Stand Header -->
-                            <div class="p-6 border-b">
-                                <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ $stand->nom_stand }}</h3>
-                                <p class="text-gray-600 text-sm mb-3">{{ $stand->user->nom_entreprise }}</p>
-                                @if($stand->description)
-                                    <p class="text-gray-700 text-sm">{{ Str::limit($stand->description, 100) }}</p>
-                                @endif
+                    <div class="exposant-content">
+                        <div class="exposant-header">
+                            <div>
+                                <h3 class="exposant-title">{{ $stand->nom_stand ?? $stand->company_name ?? $stand->user->company_name ?? 'Stand' }}</h3>
                             </div>
-
-                            <!-- Products Preview -->
-                            <div class="p-6">
-                                <h4 class="font-medium text-gray-900 mb-3">Produits disponibles</h4>
-                                @if($stand->products->count() > 0)
-                                    <div class="space-y-2 mb-4">
-                                        @foreach($stand->products->take(3) as $produit)
-                                            <div class="flex justify-between items-center text-sm">
-                                                <span class="text-gray-600">{{ $produit->nom }}</span>
-                                                <span class="font-medium text-orange-600">{{ $produit->prix_formate }}</span>
-                                            </div>
-                                        @endforeach
-                                        @if($stand->products->count() > 3)
-                                            <p class="text-xs text-gray-500">+ {{ $stand->products->count() - 3 }} autres produits</p>
-                                        @endif
-                                    </div>
-                                @else
-                                    <p class="text-sm text-gray-500 mb-4">Aucun produit disponible pour le moment</p>
-                                @endif
-
-                                <!-- Action Button -->
-                                <a href="{{ route('public.stand', $stand->id) }}" 
-                                   class="block w-full bg-gradient-to-r from-orange-500 to-purple-600 hover:from-orange-600 hover:to-purple-700 text-white text-center py-2 px-4 rounded-lg transition-colors">
-                                    Voir le stand
-                                </a>
+                            <span class="exposant-category">{{ $stand->categorie_label ?? $stand->categorie ?? 'Autre' }}</span>
+                        </div>
+                        <p class="exposant-description">{{ Str::limit($stand->description, 120) }}</p>
+                        <div class="exposant-specialties">
+                            @if($stand->specialties)
+                                @foreach(explode(',', $stand->specialties) as $specialty)
+                                    <span class="specialty-tag">{{ trim($specialty) }}</span>
+                                @endforeach
+                            @endif
+                        </div>
+                        <div class="exposant-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">{{ $stand->note ?? '4.5' }}</div>
+                                <div class="stat-label">Note</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">{{ $stand->products_count ?? ($stand->products ? $stand->products->count() : 0) }}</div>
+                                <div class="stat-label">Produits</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">{{ $stand->orders_count ?? ($stand->orders ? $stand->orders->count() : 0) }}</div>
+                                <div class="stat-label">Commandes</div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="text-center py-12">
-                    <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-gray-100 mb-4">
-                        <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
+                        <div class="exposant-actions">
+                            <a href="{{ route('stand.show', $stand->id) }}" class="btn-primary">
+                                <i class="fas fa-eye"></i>
+                                Voir le stand
+                            </a>
+                        </div>
                     </div>
-                    <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun exposant disponible</h3>
-                    <p class="text-gray-600 mb-6">Il n'y a actuellement aucun stand approuvé dans le système.</p>
-                    <a href="/" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition-colors">
-                        Retour à l'accueil
+                </div>
+            @empty
+                <div class="no-results" style="text-align:center; padding:4rem 2rem; background:white; border-radius:20px; box-shadow:0 10px 30px var(--shadow);">
+                    <i class="fas fa-search" style="font-size:4rem; color:var(--gray-dark); opacity:0.3; margin-bottom:1rem;"></i>
+                    <h3 style="color:var(--gray-dark); margin-bottom:1rem;">Aucun exposant trouvé</h3>
+                    <p style="color:var(--gray-dark); opacity:0.7; margin-bottom:2rem;">Aucun exposant ne correspond à vos critères de recherche.</p>
+                    <a href="{{ route('exposants') }}" class="btn-primary" style="display:inline-block; margin-top:1rem;">
+                        <i class="fas fa-times"></i>
+                        Effacer les filtres
                     </a>
                 </div>
-            @endif
+            @endforelse
         </div>
-
-        <!-- Footer -->
-        <footer class="bg-gray-800 text-white py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h3 class="text-2xl font-bold mb-4">🍽️ Eat&Drink</h3>
-                <p class="text-gray-400 mb-6">L'événement culinaire qui connecte passionnés et professionnels</p>
-                <div class="flex justify-center space-x-6">
-                    <a href="/" class="text-gray-400 hover:text-white transition-colors">Accueil</a>
-                    <a href="{{ route('public.exposants') }}" class="text-gray-400 hover:text-white transition-colors">Exposants</a>
-                    <a href="{{ route('public.panier') }}" class="text-gray-400 hover:text-white transition-colors">Panier</a>
-                </div>
-            </div>
-        </footer>
+        <div class="mt-8">
+            {{ $stands->withQueryString()->links() }}
+        </div>
     </div>
-</body>
-</html> 
+</section>
+@endsection 

@@ -11,7 +11,6 @@
 
             <form method="POST" action="{{ route('register') }}" class="inscription-form" id="inscription-form">
                 @csrf
-                
                 <!-- Informations personnelles -->
                 <div class="form-section">
                     <h3><i class="fas fa-user"></i> Informations personnelles</h3>
@@ -119,42 +118,23 @@
                         <label for="equipment">Équipements nécessaires</label>
                         <div class="checkbox-group">
                             <label class="checkbox">
-                                <input type="checkbox" name="equipment[]" value="refrigeration" {{ in_array('refrigeration', old('equipment', [])) ? 'checked' : '' }}>
+                                <input type="checkbox" name="equipment[]" value="refrigeration" {{ is_array(old('equipment')) && in_array('refrigeration', old('equipment')) ? 'checked' : '' }}>
                                 Réfrigération
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="equipment[]" value="cooking" {{ in_array('cooking', old('equipment', [])) ? 'checked' : '' }}>
+                                <input type="checkbox" name="equipment[]" value="cooking" {{ is_array(old('equipment')) && in_array('cooking', old('equipment')) ? 'checked' : '' }}>
                                 Équipement de cuisson
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="equipment[]" value="electricity" {{ in_array('electricity', old('equipment', [])) ? 'checked' : '' }}>
+                                <input type="checkbox" name="equipment[]" value="electricity" {{ is_array(old('equipment')) && in_array('electricity', old('equipment')) ? 'checked' : '' }}>
                                 Électricité
                             </label>
                             <label class="checkbox">
-                                <input type="checkbox" name="equipment[]" value="water" {{ in_array('water', old('equipment', [])) ? 'checked' : '' }}>
+                                <input type="checkbox" name="equipment[]" value="water" {{ is_array(old('equipment')) && in_array('water', old('equipment')) ? 'checked' : '' }}>
                                 Point d'eau
                             </label>
                         </div>
                         @error('equipment')
-                            <div class="field-error">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-
-                <!-- Mot de passe -->
-                <div class="form-section">
-                    <h3><i class="fas fa-lock"></i> Sécurité du compte</h3>
-                    <div class="form-group @error('password') error @enderror">
-                        <label for="password">Mot de passe *</label>
-                        <input type="password" id="password" name="password" required>
-                        @error('password')
-                            <div class="field-error">{{ $message }}</div>
-                        @enderror
-                    </div>
-                    <div class="form-group @error('password_confirmation') error @enderror">
-                        <label for="password_confirmation">Confirmer le mot de passe *</label>
-                        <input type="password" id="password_confirmation" name="password_confirmation" required>
-                        @error('password_confirmation')
                             <div class="field-error">{{ $message }}</div>
                         @enderror
                     </div>
@@ -165,7 +145,7 @@
                     <h3><i class="fas fa-file-contract"></i> Conditions et accords</h3>
                     <div class="form-group @error('terms') error @enderror">
                         <label class="checkbox">
-                            <input type="checkbox" id="terms" name="terms" value="1" {{ old('terms') ? 'checked' : '' }} required>
+                            <input type="checkbox" id="terms" name="terms" {{ old('terms') ? 'checked' : '' }} required>
                             J'accepte les <a href="#" onclick="showTerms()">conditions générales</a> *
                         </label>
                         @error('terms')
@@ -174,7 +154,7 @@
                     </div>
                     <div class="form-group @error('privacy') error @enderror">
                         <label class="checkbox">
-                            <input type="checkbox" id="privacy" name="privacy" value="1" {{ old('privacy') ? 'checked' : '' }} required>
+                            <input type="checkbox" id="privacy" name="privacy" {{ old('privacy') ? 'checked' : '' }} required>
                             J'accepte la <a href="#" onclick="showPrivacy()">politique de confidentialité</a> *
                         </label>
                         @error('privacy')

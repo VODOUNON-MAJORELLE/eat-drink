@@ -58,7 +58,7 @@
             @endif
 
             <div class="mt-6">
-                <a href="{{ route('public.exposants') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Retour aux exposants</a>
+                <a href="{{ route('exposants') }}" class="bg-gray-500 text-white px-4 py-2 rounded">Retour aux exposants</a>
             </div>
         </div>
     </div>

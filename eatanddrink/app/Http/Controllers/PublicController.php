@@ -12,14 +12,49 @@ class PublicController extends Controller
     /**
      * Afficher la liste des exposants (stands approuvés)
      */
-    public function exposants()
+    public function exposants(Request $request)
     {
-        $stands = Stand::with(['user', 'products'])
+        $query = Stand::with(['user', 'products'])
             ->whereHas('user', function ($query) {
                 $query->where('statut', 'approuve');
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
+            });
+
+        // Filtres
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('nom_stand', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhereHas('user', function ($userQuery) use ($search) {
+                      $userQuery->where('nom_entreprise', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        if ($request->filled('categorie')) {
+            $query->where('categorie', $request->categorie);
+        }
+
+        if ($request->filled('prix_max')) {
+            $query->whereHas('products', function ($q) use ($request) {
+                $q->where('prix', '<=', $request->prix_max);
+            });
+        }
+
+        // Tri
+        $sort = $request->get('sort', 'nom');
+        switch ($sort) {
+            case 'note':
+                $query->orderBy('note', 'desc');
+                break;
+            case 'prix':
+                $query->orderBy('prix_min', 'asc');
+                break;
+            default:
+                $query->orderBy('nom_stand', 'asc');
+        }
+
+        $stands = $query->paginate(12);
 
         return view('public.exposants', compact('stands'));
     }
@@ -36,6 +71,14 @@ class PublicController extends Controller
             ->findOrFail($id);
 
         return view('public.stand', compact('stand'));
+    }
+
+    /**
+     * Afficher la page programme du festival
+     */
+    public function programme()
+    {
+        return view('programme');
     }
 
     /**

@@ -62,6 +62,13 @@ class User extends Authenticatable
     const ROLE_PARTICIPANT = 'participant';
 
     /**
+     * Constantes pour le statut
+     */
+    const STATUT_APPROUVE = 'approuve';
+    const STATUT_EN_ATTENTE = 'en_attente';
+    const STATUT_REJETE = 'rejete';
+
+    /**
      * Vérifie si l'utilisateur est admin
      */
     public function isAdmin(): bool

@@ -29,7 +29,7 @@ return new class extends Migration
             $table->enum('role', ['admin', 'entrepreneur', 'participant'])->default('entrepreneur')->change();
             
             // Supprimer le champ statut (géré par la table stands)
-            $table->dropColumn('statut');
+            // $table->dropColumn('statut');
         });
     }
 
@@ -49,3 +49,5 @@ return new class extends Migration
         });
     }
 }; 
+ 
+ 

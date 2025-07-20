@@ -4,23 +4,21 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>🎪 EAT&DRINK Carnaval Festival 6</h1>
+            <h1>🎪 EAT&DRINK Festival</h1>
             <p>Découvrez les saveurs du monde dans une atmosphère festive et colorée. Le plus grand événement culinaire de Cotonou vous attend !</p>
             <div class="hero-buttons">
                 <a href="{{ route('exposants') }}" class="btn-primary">
                     <i class="fas fa-store"></i>
                     Découvrir les stands
                 </a>
-                <a href="#programme" class="btn-secondary">
+                <a href="{{ route('programme') }}" class="btn-outline">
                     <i class="fas fa-calendar-alt"></i>
                     Programme complet
                 </a>
-                @guest
-                    <a href="{{ route('register') }}" class="btn-outline">
-                        <i class="fas fa-plus"></i>
-                        Rejoindre comme exposant
-                    </a>
-                @endguest
+                <a href="{{ route('register') }}" class="btn-outline">
+                    <i class="fas fa-plus"></i>
+                    Rejoindre comme exposant
+                </a>
             </div>
         </div>
     </section>
@@ -33,18 +31,14 @@
                     <div class="stat-icon">
                         <i class="fas fa-store"></i>
                     </div>
-                    <div class="stat-number" id="stands-count">
-                        {{ App\Models\Stand::count() }}+
-                    </div>
+                    <div class="stat-number" id="stands-count">{{ $standsCount ?? '150+' }}</div>
                     <div class="stat-label">Stands Culinaires</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon">
                         <i class="fas fa-utensils"></i>
                     </div>
-                    <div class="stat-number" id="products-count">
-                        {{ App\Models\Product::count() }}+
-                    </div>
+                    <div class="stat-number" id="products-count">{{ $productsCount ?? '500+' }}</div>
                     <div class="stat-label">Plats & Boissons</div>
                 </div>
                 <div class="stat-card">
@@ -73,9 +67,7 @@
         </div>
         <div class="categories-grid">
             <div class="category-card">
-                <div class="category-image">
-                    🍕
-                </div>
+                <div class="category-image">🍕</div>
                 <div class="category-content">
                     <h3 class="category-title">Cuisine Européenne</h3>
                     <p class="category-description">Pizza, pâtes, crêpes et spécialités méditerranéennes</p>
@@ -83,9 +75,7 @@
                 </div>
             </div>
             <div class="category-card">
-                <div class="category-image">
-                    🍛
-                </div>
+                <div class="category-image">🍛</div>
                 <div class="category-content">
                     <h3 class="category-title">Cuisine Africaine</h3>
                     <p class="category-description">Plats traditionnels et saveurs authentiques du continent</p>
@@ -93,9 +83,7 @@
                 </div>
             </div>
             <div class="category-card">
-                <div class="category-image">
-                    🍜
-                </div>
+                <div class="category-image">🍜</div>
                 <div class="category-content">
                     <h3 class="category-title">Cuisine Asiatique</h3>
                     <p class="category-description">Sushi, nouilles, curry et délices orientaux</p>
@@ -103,9 +91,7 @@
                 </div>
             </div>
             <div class="category-card">
-                <div class="category-image">
-                    🌮
-                </div>
+                <div class="category-image">🌮</div>
                 <div class="category-content">
                     <h3 class="category-title">Cuisine Latino</h3>
                     <p class="category-description">Tacos, empanadas et saveurs d'Amérique latine</p>
@@ -113,9 +99,7 @@
                 </div>
             </div>
             <div class="category-card">
-                <div class="category-image">
-                    🧃
-                </div>
+                <div class="category-image">🧃</div>
                 <div class="category-content">
                     <h3 class="category-title">Boissons & Cocktails</h3>
                     <p class="category-description">Jus frais, cocktails et boissons du monde</p>
@@ -123,9 +107,7 @@
                 </div>
             </div>
             <div class="category-card">
-                <div class="category-image">
-                    🍰
-                </div>
+                <div class="category-image">🍰</div>
                 <div class="category-content">
                     <h3 class="category-title">Desserts & Pâtisseries</h3>
                     <p class="category-description">Gâteaux, chocolats et douceurs sucrées</p>
@@ -160,24 +142,10 @@
                     </div>
                 </div>
                 <div class="join-actions">
-                    @guest
-                        <a href="{{ route('register') }}" class="btn-primary">
-                            <i class="fas fa-plus"></i>
-                            Demander un stand
-                        </a>
-                    @else
-                        @if(auth()->user()->role === 'entrepreneur')
-                            <a href="{{ route('entrepreneur.dashboard') }}" class="btn-primary">
-                                <i class="fas fa-tachometer-alt"></i>
-                                Mon Tableau de Bord
-                            </a>
-                        @else
-                            <a href="{{ route('register') }}" class="btn-primary">
-                                <i class="fas fa-plus"></i>
-                                Demander un stand
-                            </a>
-                        @endif
-                    @endguest
+                    <a href="{{ route('register') }}" class="btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Demander un stand
+                    </a>
                     <a href="{{ route('exposants') }}" class="btn-secondary">
                         <i class="fas fa-eye"></i>
                         Voir les exposants
