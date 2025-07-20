@@ -330,6 +330,173 @@ function scrollToFirstError() {
     }
 }
 
+// ===== FONCTIONS DE LA PAGE PROGRAMME =====
+
+// Variables globales pour le programme
+let cartItems = 0;
+let userCalendar = [];
+
+// Configuration des onglets de jours
+function setupDayTabs() {
+    const dayTabs = document.querySelectorAll('.day-tab');
+    const dayProgrammes = document.querySelectorAll('.day-programme');
+    
+    dayTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetDay = tab.getAttribute('data-day');
+            
+            // Mettre à jour les onglets
+            dayTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            // Mettre à jour les programmes
+            dayProgrammes.forEach(programme => {
+                programme.classList.remove('active');
+                if (programme.id === `${targetDay}-programme`) {
+                    programme.classList.add('active');
+                }
+            });
+        });
+    });
+}
+
+// Chargement du calendrier utilisateur
+function loadUserCalendar() {
+    const saved = localStorage.getItem('userCalendar');
+    if (saved) {
+        userCalendar = JSON.parse(saved);
+    }
+}
+
+// Sauvegarde du calendrier utilisateur
+function saveUserCalendar() {
+    localStorage.setItem('userCalendar', JSON.stringify(userCalendar));
+}
+
+// Ajouter un événement au calendrier (version Laravel)
+function addToCalendar(day, time, event) {
+    const eventData = {
+        day: day,
+        time: time,
+        event: event,
+        addedAt: new Date().toISOString()
+    };
+    
+    // Vérifier si l'événement n'est pas déjà ajouté
+    const exists = userCalendar.find(item => 
+        item.day === day && item.time === time && item.event === event
+    );
+    
+    if (exists) {
+        showNotification('Cet événement est déjà dans votre calendrier', 'info');
+        return;
+    }
+    
+    // Utiliser la route Laravel pour sauvegarder
+    fetch('/calendrier/ajouter', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(eventData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            userCalendar.push(eventData);
+            saveUserCalendar();
+            showNotification(data.message, 'success');
+        } else {
+            showNotification(data.message, 'info');
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        // Fallback vers localStorage
+        userCalendar.push(eventData);
+        saveUserCalendar();
+        showNotification(`${event} ajouté à votre calendrier !`, 'success');
+    });
+}
+
+// S'inscrire à un atelier
+function registerWorkshop(workshopId) {
+    const workshops = {
+        'pizza-masterclass': 'Masterclass Pizza',
+        'wine-tasting': 'Dégustation de vins',
+        'sushi-workshop': 'Atelier Sushi',
+        'pastry-workshop': 'Atelier Pâtisserie'
+    };
+    
+    const workshopName = workshops[workshopId];
+    
+    // Simuler une inscription
+    showNotification(`Inscription à ${workshopName} en cours...`, 'info');
+    
+    // Utiliser la route Laravel pour l'inscription
+    fetch('/ateliers/inscription', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            workshop_id: workshopId,
+            name: 'Utilisateur Festival', // Dans un vrai projet, on récupérerait les données du formulaire
+            email: 'user@festival.com',
+            phone: '+22912345678'
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification(`Inscription réussie à ${workshopName} !`, 'success');
+            
+            // Ajouter automatiquement au calendrier
+            const day = getCurrentDay();
+            const time = getWorkshopTime(workshopId);
+            addToCalendar(day, time, workshopName);
+        } else {
+            showNotification(data.message, 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        showNotification('Erreur lors de l\'inscription', 'error');
+    });
+}
+
+// Obtenir le jour actuel
+function getCurrentDay() {
+    const activeTab = document.querySelector('.day-tab.active');
+    return activeTab ? activeTab.getAttribute('data-day') : 'day1';
+}
+
+// Obtenir l'heure d'un atelier
+function getWorkshopTime(workshopId) {
+    const times = {
+        'pizza-masterclass': '12:00',
+        'wine-tasting': '18:00',
+        'sushi-workshop': '14:00',
+        'pastry-workshop': '10:00'
+    };
+    return times[workshopId] || '10:00';
+}
+
+// Fonction panier
+function toggleCart() {
+    showNotification('Fonctionnalité du panier en cours de développement', 'info');
+}
+
+function addToCart() {
+    cartItems++;
+    const cartCount = document.getElementById('cart-count');
+    if (cartCount) {
+        cartCount.textContent = cartItems;
+    }
+}
+
 // ===== FONCTIONS UTILITAIRES =====
 
 // Affichage des conditions générales
@@ -386,7 +553,7 @@ function showNotification(message, type = 'info') {
                 document.body.removeChild(notification);
             }
         }, 300);
-    }, 3000);
+    }, 4000);
 }
 
 // ===== INITIALISATION =====
@@ -399,6 +566,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialisation du formulaire d'inscription
     setupInscriptionForm();
+    
+    // Initialisation de la page programme
+    setupDayTabs();
+    loadUserCalendar();
     
     // Animation des statistiques au scroll
     const statsSection = document.querySelector('.stats-section');
