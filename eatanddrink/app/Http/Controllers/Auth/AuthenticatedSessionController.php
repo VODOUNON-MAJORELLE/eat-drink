@@ -44,4 +44,46 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function loginVisitor(Request $request) {
+        // À implémenter : logique de connexion visiteur
+        return back()->withErrors(['email' => 'Connexion visiteur non implémentée.']);
+    }
+    public function loginEntrepreneur(Request $request) {
+        // À implémenter : logique de connexion entrepreneur
+        return back()->withErrors(['email' => 'Connexion entrepreneur non implémentée.']);
+    }
+    public function loginAdmin(Request $request) {
+        // À implémenter : logique de connexion admin
+        return back()->withErrors(['email' => 'Connexion admin non implémentée.']);
+    }
+
+    public function loginMulti(Request $request)
+    {
+        $request->validate([
+            'role' => 'required|in:visitor,entrepreneur,admin',
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+        $role = $request->input('role');
+
+        // On suppose que le champ "role" existe sur la table users (adapter si besoin)
+        if (Auth::attempt(array_merge($credentials, ['role' => $role]))) {
+            $request->session()->regenerate();
+            // Redirection selon le rôle
+            if ($role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($role === 'entrepreneur') {
+                return redirect()->route('entrepreneur.dashboard');
+            } else {
+                return redirect()->route('dashboard'); // ou une route visiteur spécifique
+            }
+        }
+
+        return back()->withErrors([
+            'email' => 'Identifiants ou rôle incorrects.',
+        ])->withInput($request->except('password'));
+    }
 }

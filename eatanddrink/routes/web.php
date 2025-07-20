@@ -6,6 +6,7 @@ use App\Http\Controllers\EntrepreneurController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,3 +67,8 @@ Route::middleware(['auth', 'entrepreneur'])->prefix('entrepreneur')->name('entre
 Route::middleware(['auth'])->group(function () {
     Route::get('/statut', [EntrepreneurController::class, 'statutDemande'])->name('entrepreneur.statut');
 });
+
+Route::post('/login/visitor', [AuthenticatedSessionController::class, 'loginVisitor'])->name('login.visitor');
+Route::post('/login/entrepreneur', [AuthenticatedSessionController::class, 'loginEntrepreneur'])->name('login.entrepreneur');
+Route::post('/login/admin', [AuthenticatedSessionController::class, 'loginAdmin'])->name('login.admin');
+Route::post('/login/multi', [AuthenticatedSessionController::class, 'loginMulti'])->name('login.multi');
