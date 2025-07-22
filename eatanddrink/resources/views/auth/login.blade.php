@@ -9,7 +9,7 @@
                 <p>Accédez à votre espace personnel</p>
             </div>
             <form method="POST" action="{{ route('login.multi') }}">
-                @csrf
+        @csrf
                 <div class="form-group @error('role') error @enderror">
                     <label for="role">Je me connecte en tant que</label>
                     <select id="role" name="role" required style="width:100%; padding:1rem; border-radius:10px;">
@@ -66,9 +66,9 @@
                         <li>Entrée gratuite</li>
                     </ul>
                 </div>
-            </div>
         </div>
-    </div>
+        </div>
+        </div>
 </section>
 <script>
 document.addEventListener('DOMContentLoaded', () => {

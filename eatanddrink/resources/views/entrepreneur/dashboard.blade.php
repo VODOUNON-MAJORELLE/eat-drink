@@ -73,7 +73,7 @@
                         <div class="bg-white border border-gray-200 rounded-lg p-6">
                             <h3 class="text-lg font-semibold text-gray-900 mb-4">Gestion des Produits</h3>
                             <div class="space-y-3">
-                                <a href="{{ route('entrepreneur.produits') }}" class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded text-center transition duration-150 ease-in-out">
+                                <a href="{{ route('entrepreneur.produits.index') }}" class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded text-center transition duration-150 ease-in-out">
                                     Voir mes produits
                                 </a>
                                 <a href="{{ route('entrepreneur.produits.create') }}" class="block w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded text-center transition duration-150 ease-in-out">

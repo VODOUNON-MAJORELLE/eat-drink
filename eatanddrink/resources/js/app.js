@@ -168,7 +168,7 @@ function setupDynamicValidation() {
     if (emailInput) {
         emailInput.addEventListener('input', (e) => {
             if (e.target.value) {
-                validateEmail(e.target.value);
+                isValidEmail(e.target.value);
             }
         });
     }
@@ -184,11 +184,11 @@ function setupDynamicValidation() {
 
 // Gestion de la soumission
 function handleFormSubmission(e) {
-    e.preventDefault();
-    
     if (validateForm()) {
-        submitForm();
+        // Laisser le formulaire se soumettre normalement
+        return true;
     } else {
+        e.preventDefault();
         showNotification('Veuillez corriger les erreurs avant de soumettre', 'error');
         scrollToFirstError();
     }
@@ -252,20 +252,7 @@ function validateField(event) {
             }
             break;
             
-        case 'specialties':
-            if (value.length < 10) {
-                isValid = false;
-                errorMessage = 'Veuillez décrire vos spécialités (minimum 10 caractères)';
-            }
-            break;
-            
-        case 'description':
-            if (value.length < 50) {
-                isValid = false;
-                errorMessage = 'Veuillez fournir une description détaillée (minimum 50 caractères)';
-            }
-            break;
-            
+        // SUPPRIMÉ : specialties et description
         case 'password':
             if (value.length < 8) {
                 isValid = false;
@@ -340,25 +327,24 @@ function validateTerms() {
 
 // Affichage de l'erreur d'un champ
 function showFieldError(field, message) {
-    clearFieldError(field);
-    
-    field.classList.add('error');
-    
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'field-error';
-    errorDiv.textContent = message;
-    
-    field.parentNode.appendChild(errorDiv);
+    const group = field.closest('.form-group');
+    if (!group) return;
+    let error = group.querySelector('.field-error');
+    if (error) error.remove();
+    error = document.createElement('div');
+    error.className = 'field-error';
+    error.textContent = message;
+    group.appendChild(error);
+    group.classList.add('error');
 }
 
 // Effacement de l'erreur d'un champ
 function clearFieldError(field) {
-    field.classList.remove('error');
-    
-    const errorDiv = field.parentNode.querySelector('.field-error');
-    if (errorDiv) {
-        errorDiv.remove();
-    }
+    const group = field.closest ? field.closest('.form-group') : null;
+    if (!group) return;
+    const error = group.querySelector('.field-error');
+    if (error && typeof error.remove === 'function') error.remove();
+    if (group.classList && typeof group.classList.remove === 'function') group.classList.remove('error');
 }
 
 // Soumission du formulaire
@@ -400,14 +386,16 @@ function setupDayTabs() {
             const targetDay = tab.getAttribute('data-day');
             
             // Mettre à jour les onglets
-            dayTabs.forEach(t => t.classList.remove('active'));
+            dayTabs.forEach(t => {
+                if (t.classList) t.classList.remove('active');
+            });
             tab.classList.add('active');
             
             // Mettre à jour les programmes
             dayProgrammes.forEach(programme => {
-                programme.classList.remove('active');
+                if (programme.classList) programme.classList.remove('active');
                 if (programme.id === `${targetDay}-programme`) {
-                    programme.classList.add('active');
+                    if (programme.classList) programme.classList.add('active');
                 }
             });
         });

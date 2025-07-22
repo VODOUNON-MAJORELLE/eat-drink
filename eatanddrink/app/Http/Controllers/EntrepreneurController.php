@@ -200,11 +200,10 @@ class EntrepreneurController extends Controller
     public function statutDemande()
     {
         $user = auth()->user();
-        
-        if ($user->isEntrepreneurApprouve()) {
-            return redirect()->route('entrepreneur.dashboard');
-        }
-
+        // SUPPRIMER la redirection automatique pour les approuvés
+        // if ($user->isEntrepreneurApprouve()) {
+        //     return redirect()->route('entrepreneur.dashboard');
+        // }
         return view('entrepreneur.statut', compact('user'));
     }
 } 

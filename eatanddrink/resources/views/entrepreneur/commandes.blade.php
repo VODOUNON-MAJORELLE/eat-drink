@@ -86,7 +86,7 @@
                         </div>
                         <h3 class="text-lg font-medium text-gray-900 mb-2">Aucune commande reçue</h3>
                         <p class="text-gray-600 mb-6">Vous n'avez pas encore reçu de commandes pour votre stand.</p>
-                        <a href="{{ route('entrepreneur.produits') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                        <a href="{{ route('entrepreneur.produits.index') }}" class="bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
                             Gérer mes produits
                         </a>
                     </div>

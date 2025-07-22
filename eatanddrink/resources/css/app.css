@@ -49,6 +49,10 @@ body {
     color: var(--gray-dark);
 }
 
+main, .status-section {
+    padding-top: 90px;
+}
+
 .header, .hero, .join-section, .categories-section, .stats-section, .info-section, .footer {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

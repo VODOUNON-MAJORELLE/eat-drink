@@ -92,6 +92,12 @@ class User extends Authenticatable
         return $this->role === self::ROLE_PARTICIPANT;
     }
 
+    // Ajouté pour middleware entrepreneur
+    public function isEntrepreneurApprouve()
+    {
+        return $this->role === 'entrepreneur' && $this->statut === 'approuve';
+    }
+
     /**
      * Relation avec le stand (un utilisateur a un stand)
      */

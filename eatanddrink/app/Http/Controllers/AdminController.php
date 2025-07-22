@@ -20,14 +20,34 @@ class AdminController extends Controller
     {
         // Statistiques pour le dashboard
         $stats = [
-            'total_entrepreneurs' => User::where('role', '!=', User::ROLE_ADMIN)->count(),
-            'demandes_en_attente' => User::where('role', User::ROLE_ENTREPRENEUR_EN_ATTENTE)->count(),
-            'entrepreneurs_approuves' => User::where('role', User::ROLE_ENTREPRENEUR_APPROUVE)->count(),
+            'total_entrepreneurs' => User::where('role', '!=', 'admin')->count(),
+            'demandes_en_attente' => User::where('role', 'participant')->count(),
+            'entrepreneurs_approuves' => User::where('role', 'entrepreneur')->count(),
             'total_stands' => Stand::count(),
             'total_commandes' => Order::count(),
+            // Ajout de stats fictives pour le front
+            'chiffre_affaires' => '15.2M FCFA',
+            'visiteurs' => 8234,
         ];
 
-        return view('admin.dashboard', compact('stats'));
+        // Demandes
+        $pendingRequests = User::where('role', 'participant')->get();
+        $approvedRequests = User::where('role', 'entrepreneur')->get();
+        $rejectedRequests = User::where('role', 'rejected')->get(); // à adapter si tu as un champ statut
+
+        // Commandes (exemple simplifié)
+        $orders = Order::with(['stand', 'user'])->orderBy('date_commande', 'desc')->limit(20)->get();
+
+        return view('admin.dashboard', [
+            'stats' => $stats,
+            'pendingRequests' => $pendingRequests,
+            'approvedRequests' => $approvedRequests,
+            'rejectedRequests' => $rejectedRequests,
+            'pendingCount' => $pendingRequests->count(),
+            'approvedCount' => $approvedRequests->count(),
+            'rejectedCount' => $rejectedRequests->count(),
+            'orders' => $orders,
+        ]);
     }
 
     /**
@@ -35,7 +55,7 @@ class AdminController extends Controller
      */
     public function demandesEnAttente()
     {
-        $demandes = User::where('role', User::ROLE_ENTREPRENEUR_EN_ATTENTE)
+        $demandes = User::where('role', 'participant')
             ->with('stand')
             ->orderBy('created_at', 'desc')
             ->get();
@@ -53,21 +73,21 @@ class AdminController extends Controller
 
             $user = User::findOrFail($userId);
             
-            if ($user->role !== User::ROLE_ENTREPRENEUR_EN_ATTENTE) {
+            if ($user->role !== 'participant') {
                 return back()->with('error', 'Cette demande ne peut pas être approuvée.');
             }
 
             // Mettre à jour le rôle et le statut
             $user->update([
-                'role' => User::ROLE_ENTREPRENEUR_APPROUVE,
-                'statut' => User::STATUT_APPROUVE,
+                'role' => 'entrepreneur',
+                // 'statut' => 'approuve', // décommente si le champ existe encore
             ]);
 
             // Créer un stand pour cet utilisateur s'il n'en a pas
             if (!$user->stand) {
                 Stand::create([
-                    'nom_stand' => $user->nom_entreprise,
-                    'description' => 'Stand de ' . $user->nom_entreprise,
+                    'nom_stand' => $user->company_name ?? $user->name,
+                    'description' => 'Stand de ' . ($user->company_name ?? $user->name),
                     'user_id' => $user->id,
                 ]);
             }
@@ -77,7 +97,7 @@ class AdminController extends Controller
             // Envoyer un email de notification
             Mail::to($user->email)->send(new DemandeApprouvee($user));
 
-            return back()->with('success', 'La demande de ' . $user->nom_entreprise . ' a été approuvée avec succès.');
+            return back()->with('success', 'La demande de ' . ($user->company_name ?? $user->name) . ' a été approuvée avec succès.');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -97,18 +117,18 @@ class AdminController extends Controller
         try {
             $user = User::findOrFail($userId);
             
-            if ($user->role !== User::ROLE_ENTREPRENEUR_EN_ATTENTE) {
+            if ($user->role !== 'participant') {
                 return back()->with('error', 'Cette demande ne peut pas être rejetée.');
             }
 
             $user->update([
-                'statut' => User::STATUT_REJETE,
+                // 'statut' => 'rejete', // décommente si le champ existe encore
             ]);
 
             // Envoyer un email de notification
             Mail::to($user->email)->send(new DemandeRejetee($user, $request->motif_rejet));
 
-            return back()->with('success', 'La demande de ' . $user->nom_entreprise . ' a été rejetée.');
+            return back()->with('success', 'La demande de ' . ($user->company_name ?? $user->name) . ' a été rejetée.');
 
         } catch (\Exception $e) {
             return back()->with('error', 'Une erreur est survenue lors du rejet.');

@@ -15,10 +15,10 @@
                     <i class="fas fa-calendar-alt"></i>
                     Programme complet
                 </a>
-                <a href="{{ route('register') }}" class="btn-outline">
-                    <i class="fas fa-plus"></i>
-                    Rejoindre comme exposant
-                </a>
+                    <a href="{{ route('register') }}" class="btn-outline">
+                        <i class="fas fa-plus"></i>
+                        Rejoindre comme exposant
+                    </a>
             </div>
         </div>
     </section>
@@ -142,10 +142,10 @@
                     </div>
                 </div>
                 <div class="join-actions">
-                    <a href="{{ route('register') }}" class="btn-primary">
-                        <i class="fas fa-plus"></i>
-                        Demander un stand
-                    </a>
+                            <a href="{{ route('register') }}" class="btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Demander un stand
+                            </a>
                     <a href="{{ route('exposants') }}" class="btn-secondary">
                         <i class="fas fa-eye"></i>
                         Voir les exposants

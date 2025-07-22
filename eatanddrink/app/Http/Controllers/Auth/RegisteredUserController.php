@@ -36,12 +36,8 @@ class RegisteredUserController extends Controller
             'phone' => ['required', 'string', 'max:20'],
             'company_name' => ['required', 'string', 'max:255'],
             'activity_type' => ['required', 'string', 'in:restaurant,catering,bakery,beverages,street-food,artisan,other'],
-            'specialties' => ['required', 'string', 'min:10', 'max:500'],
-            'description' => ['required', 'string', 'min:50', 'max:1000'],
             'experience' => ['nullable', 'string', 'max:1000'],
             'stand_size' => ['nullable', 'string', 'in:small,medium,large'],
-            'equipment' => ['nullable', 'array'],
-            'equipment.*' => ['string', 'in:refrigeration,cooking,electricity,water'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'terms' => ['required', 'accepted'],
             'privacy' => ['required', 'accepted'],
@@ -55,8 +51,6 @@ class RegisteredUserController extends Controller
             'phone' => $request->phone,
             'company_name' => $request->company_name,
             'activity_type' => $request->activity_type,
-            'specialties' => $request->specialties,
-            'description' => $request->description,
             'experience' => $request->experience,
         ]);
 
@@ -64,7 +58,6 @@ class RegisteredUserController extends Controller
         $stand = Stand::create([
             'user_id' => $user->id,
             'size' => $request->stand_size ?? 'medium',
-            'equipment' => json_encode($request->equipment ?? []),
             'status' => 'pending',
             'request_date' => now(),
         ]);
@@ -73,6 +66,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('entrepreneur.statut');
     }
 }

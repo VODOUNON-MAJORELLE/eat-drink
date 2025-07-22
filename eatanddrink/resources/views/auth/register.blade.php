@@ -37,6 +37,20 @@
                             <div class="field-error">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group @error('password') error @enderror">
+                        <label for="password">Mot de passe *</label>
+                        <input type="password" id="password" name="password" required>
+                        @error('password')
+                            <div class="field-error">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group @error('password_confirmation') error @enderror">
+                        <label for="password_confirmation">Confirmer le mot de passe *</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" required>
+                        @error('password_confirmation')
+                            <div class="field-error">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="form-group @error('phone') error @enderror">
                         <label for="phone">Téléphone *</label>
                         <input type="tel" id="phone" name="phone" value="{{ old('phone') }}" required>
@@ -72,25 +86,12 @@
                             <div class="field-error">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group @error('specialties') error @enderror">
-                        <label for="specialties">Spécialités culinaires *</label>
-                        <input type="text" id="specialties" name="specialties" value="{{ old('specialties') }}" placeholder="Ex: Cuisine italienne, Pâtisserie française..." required>
-                        @error('specialties')
-                            <div class="field-error">{{ $message }}</div>
-                        @enderror
-                    </div>
                 </div>
 
                 <!-- Description de l'activité -->
+                <!-- Champ description supprimé -->
                 <div class="form-section">
                     <h3><i class="fas fa-edit"></i> Description de votre activité</h3>
-                    <div class="form-group @error('description') error @enderror">
-                        <label for="description">Décrivez votre activité et vos produits *</label>
-                        <textarea id="description" name="description" rows="4" placeholder="Décrivez votre cuisine, vos spécialités, votre expérience..." required>{{ old('description') }}</textarea>
-                        @error('description')
-                            <div class="field-error">{{ $message }}</div>
-                        @enderror
-                    </div>
                     <div class="form-group @error('experience') error @enderror">
                         <label for="experience">Expérience dans le domaine</label>
                         <textarea id="experience" name="experience" rows="3" placeholder="Votre expérience, formations, certifications...">{{ old('experience') }}</textarea>
@@ -114,30 +115,7 @@
                             <div class="field-error">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="form-group @error('equipment') error @enderror">
-                        <label for="equipment">Équipements nécessaires</label>
-                        <div class="checkbox-group">
-                            <label class="checkbox">
-                                <input type="checkbox" name="equipment[]" value="refrigeration" {{ is_array(old('equipment')) && in_array('refrigeration', old('equipment')) ? 'checked' : '' }}>
-                                Réfrigération
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="equipment[]" value="cooking" {{ is_array(old('equipment')) && in_array('cooking', old('equipment')) ? 'checked' : '' }}>
-                                Équipement de cuisson
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="equipment[]" value="electricity" {{ is_array(old('equipment')) && in_array('electricity', old('equipment')) ? 'checked' : '' }}>
-                                Électricité
-                            </label>
-                            <label class="checkbox">
-                                <input type="checkbox" name="equipment[]" value="water" {{ is_array(old('equipment')) && in_array('water', old('equipment')) ? 'checked' : '' }}>
-                                Point d'eau
-                            </label>
-                        </div>
-                        @error('equipment')
-                            <div class="field-error">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <!-- Champ équipements nécessaires supprimé -->
                 </div>
 
                 <!-- Conditions et accords -->

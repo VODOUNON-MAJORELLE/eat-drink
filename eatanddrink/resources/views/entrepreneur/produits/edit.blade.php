@@ -7,7 +7,7 @@
             <div class="p-6 text-gray-900">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-3xl font-bold text-gray-900">Modifier le produit</h1>
-                    <a href="{{ route('entrepreneur.produits') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                    <a href="{{ route('entrepreneur.produits.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
                         Retour aux produits
                     </a>
                 </div>
@@ -84,7 +84,7 @@
 
                         <!-- Boutons -->
                         <div class="flex justify-end space-x-3 pt-6">
-                            <a href="{{ route('entrepreneur.produits') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
+                            <a href="{{ route('entrepreneur.produits.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
                                 Annuler
                             </a>
                             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-150 ease-in-out">
