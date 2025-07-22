@@ -20,6 +20,35 @@
 </head>
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100">
+        <!-- Notifications -->
+        @if(session('success'))
+            <div id="notif-success" style="position:fixed;top:30px;right:30px;z-index:2000;background:#4CAF50;color:white;padding:1.2rem 2.2rem;border-radius:12px;box-shadow:0 4px 20px rgba(76,175,80,0.15);font-size:1.1rem;font-weight:600;display:flex;align-items:center;gap:0.7rem;animation:fadeInNotif 0.3s;">
+                <i class="fas fa-check-circle" style="font-size:1.5rem;"></i> {{ session('success') }}
+            </div>
+            <script>
+                setTimeout(() => {
+                    const notif = document.getElementById('notif-success');
+                    if(notif) notif.style.display = 'none';
+                }, 3500);
+            </script>
+            <style>
+                @keyframes fadeInNotif {
+                    from { opacity:0; transform:translateY(-20px); }
+                    to { opacity:1; transform:translateY(0); }
+                }
+            </style>
+        @endif
+        @if(session('error'))
+            <div id="notif-error" style="position:fixed;top:30px;right:30px;z-index:2000;background:#E63946;color:white;padding:1.2rem 2.2rem;border-radius:12px;box-shadow:0 4px 20px rgba(230,57,70,0.15);font-size:1.1rem;font-weight:600;display:flex;align-items:center;gap:0.7rem;animation:fadeInNotif 0.3s;">
+                <i class="fas fa-times-circle" style="font-size:1.5rem;"></i> {{ session('error') }}
+            </div>
+            <script>
+                setTimeout(() => {
+                    const notif = document.getElementById('notif-error');
+                    if(notif) notif.style.display = 'none';
+                }, 3500);
+            </script>
+        @endif
         <!-- Header -->
         <header class="header">
             <div class="nav-container">

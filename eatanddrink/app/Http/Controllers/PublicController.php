@@ -69,8 +69,8 @@ class PublicController extends Controller
                 $query->where('statut', 'approuve');
             })
             ->findOrFail($id);
-
-        return view('public.stand', compact('stand'));
+        $products = $stand->products;
+        return view('public.stand', compact('stand', 'products'));
     }
 
     /**
@@ -218,7 +218,7 @@ class PublicController extends Controller
             session()->put('panier', $panier);
         }
 
-        return redirect()->route('public.exposants')
+        return redirect()->route('exposants')
             ->with('success', 'Commande passée avec succès !');
     }
 
