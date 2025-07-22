@@ -32,142 +32,71 @@
 <!-- Section du programme -->
 <section class="programme-section">
     <div class="programme-container">
-        <!-- Programme du Jour 1 -->
         <div class="day-programme active" id="day1-programme">
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">10:00</div>
+                    <div class="timeline-time">Toute la journée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🎪 Cérémonie d'ouverture</h3>
+                                <h3 class="event-title">🍲 Stands de nourriture avec des chefs locaux</h3>
                             </div>
-                            <span class="event-category">Événement</span>
+                            <span class="event-category">Gastronomie</span>
                         </div>
-                        <p class="event-description">Ouverture officielle du festival avec discours des organisateurs et présentation des exposants.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Scène principale</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>1h30</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="addToCalendar('day1', '10:00', 'Cérémonie d\'ouverture')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Ajouter au calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Découvrez une variété de stands tenus par des chefs et entrepreneurs culinaires de la région, proposant des plats authentiques et créatifs.</p>
                     </div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">12:00</div>
+                    <div class="timeline-time">Toute la journée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🍕 Masterclass Pizza</h3>
+                                <h3 class="event-title">🍹 Bars spécialisés & cocktails</h3>
                             </div>
-                            <span class="event-category">Atelier</span>
+                            <span class="event-category">Bar</span>
                         </div>
-                        <p class="event-description">Apprenez à faire une vraie pizza napolitaine avec nos maîtres pizzaiolos italiens.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Zone ateliers</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>2h00</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-users"></i>
-                                <span>20 places</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="registerWorkshop('pizza-masterclass')">
-                                <i class="fas fa-sign-in-alt"></i>
-                                S'inscrire
-                            </button>
-                            <button class="btn-outline" onclick="addToCalendar('day1', '12:00', 'Masterclass Pizza')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Savourez des cocktails originaux et des boissons rafraîchissantes préparés par des barmans experts.</p>
                     </div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">15:00</div>
+                    <div class="timeline-time">Après-midi & Soirée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🎵 Concert Jazz & Food</h3>
+                                <h3 class="event-title">🎧 DJ & animations musicales</h3>
                             </div>
-                            <span class="event-category">Spectacle</span>
+                            <span class="event-category">Animation</span>
                         </div>
-                        <p class="event-description">Concert de jazz en plein air avec dégustation de spécialités culinaires locales.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Jardin musical</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>1h45</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="addToCalendar('day1', '15:00', 'Concert Jazz & Food')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Ajouter au calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Ambiance festive assurée avec des DJ, des groupes live et des animations musicales tout au long du festival.</p>
                     </div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">18:00</div>
+                    <div class="timeline-time">Toute la journée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🍷 Dégustation de vins</h3>
+                                <h3 class="event-title">🍽️ Expériences culinaires immersives</h3>
                             </div>
-                            <span class="event-category">Dégustation</span>
+                            <span class="event-category">Expérience</span>
                         </div>
-                        <p class="event-description">Découverte des vins du monde avec des sommeliers experts et accords mets-vins.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Cave à vins</span>
+                        <p class="event-description">Participez à des dégustations, démonstrations et ateliers pour vivre la cuisine autrement.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">Matin & Après-midi</div>
+                    <div class="timeline-content">
+                        <div class="event-header">
+                            <div>
+                                <h3 class="event-title">👧 Activités pour enfants</h3>
                             </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>1h30</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-users"></i>
-                                <span>15 places</span>
-                            </div>
+                            <span class="event-category">Famille</span>
                         </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="registerWorkshop('wine-tasting')">
-                                <i class="fas fa-sign-in-alt"></i>
-                                S'inscrire
-                            </button>
-                            <button class="btn-outline" onclick="addToCalendar('day1', '18:00', 'Dégustation de vins')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Ateliers de cuisine, jeux, spectacles et animations spécialement conçus pour les plus jeunes.</p>
                     </div>
                 </div>
             </div>
@@ -178,129 +107,67 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">09:00</div>
+                    <div class="timeline-time">Toute la journée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🥐 Petit-déjeuner gourmet</h3>
+                                <h3 class="event-title">🍲 Stands de nourriture avec des chefs locaux</h3>
                             </div>
-                            <span class="event-category">Dégustation</span>
+                            <span class="event-category">Gastronomie</span>
                         </div>
-                        <p class="event-description">Petit-déjeuner continental avec viennoiseries fraîches et boissons chaudes.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Espace petit-déjeuner</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>2h00</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="addToCalendar('day2', '09:00', 'Petit-déjeuner gourmet')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Ajouter au calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Découvrez une variété de stands tenus par des chefs et entrepreneurs culinaires de la région, proposant des plats authentiques et créatifs.</p>
                     </div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">11:00</div>
+                    <div class="timeline-time">Toute la journée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">👨‍🍳 Concours de cuisine</h3>
+                                <h3 class="event-title">🍹 Bars spécialisés & cocktails</h3>
                             </div>
-                            <span class="event-category">Compétition</span>
+                            <span class="event-category">Bar</span>
                         </div>
-                        <p class="event-description">Grand concours de cuisine avec des chefs professionnels et amateurs.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Scène culinaire</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>3h00</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="addToCalendar('day2', '11:00', 'Concours de cuisine')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Ajouter au calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Savourez des cocktails originaux et des boissons rafraîchissantes préparés par des barmans experts.</p>
                     </div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">14:00</div>
+                    <div class="timeline-time">Après-midi & Soirée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🍣 Atelier Sushi</h3>
+                                <h3 class="event-title">🎧 DJ & animations musicales</h3>
                             </div>
-                            <span class="event-category">Atelier</span>
+                            <span class="event-category">Animation</span>
                         </div>
-                        <p class="event-description">Apprenez à préparer des sushis et makis avec nos experts japonais.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Zone ateliers</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>2h30</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-users"></i>
-                                <span>25 places</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="registerWorkshop('sushi-workshop')">
-                                <i class="fas fa-sign-in-alt"></i>
-                                S'inscrire
-                            </button>
-                            <button class="btn-outline" onclick="addToCalendar('day2', '14:00', 'Atelier Sushi')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Ambiance festive assurée avec des DJ, des groupes live et des animations musicales tout au long du festival.</p>
                     </div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">17:00</div>
+                    <div class="timeline-time">Toute la journée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🎭 Spectacle culinaire</h3>
+                                <h3 class="event-title">🍽️ Expériences culinaires immersives</h3>
                             </div>
-                            <span class="event-category">Spectacle</span>
+                            <span class="event-category">Expérience</span>
                         </div>
-                        <p class="event-description">Spectacle de cuisine moléculaire et performances artistiques culinaires.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Scène principale</span>
+                        <p class="event-description">Participez à des dégustations, démonstrations et ateliers pour vivre la cuisine autrement.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">Matin & Après-midi</div>
+                    <div class="timeline-content">
+                        <div class="event-header">
+                            <div>
+                                <h3 class="event-title">👧 Activités pour enfants</h3>
                             </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>1h15</span>
-                            </div>
+                            <span class="event-category">Famille</span>
                         </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="addToCalendar('day2', '17:00', 'Spectacle culinaire')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Ajouter au calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Ateliers de cuisine, jeux, spectacles et animations spécialement conçus pour les plus jeunes.</p>
                     </div>
                 </div>
             </div>
@@ -311,99 +178,67 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">10:00</div>
+                    <div class="timeline-time">Toute la journée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🍰 Atelier Pâtisserie</h3>
+                                <h3 class="event-title">🍲 Stands de nourriture avec des chefs locaux</h3>
                             </div>
-                            <span class="event-category">Atelier</span>
+                            <span class="event-category">Gastronomie</span>
                         </div>
-                        <p class="event-description">Créez vos propres pâtisseries avec nos chefs pâtissiers français.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Zone ateliers</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>2h00</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-users"></i>
-                                <span>18 places</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="registerWorkshop('pastry-workshop')">
-                                <i class="fas fa-sign-in-alt"></i>
-                                S'inscrire
-                            </button>
-                            <button class="btn-outline" onclick="addToCalendar('day3', '10:00', 'Atelier Pâtisserie')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Découvrez une variété de stands tenus par des chefs et entrepreneurs culinaires de la région, proposant des plats authentiques et créatifs.</p>
                     </div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">13:00</div>
+                    <div class="timeline-time">Toute la journée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🏆 Remise des prix</h3>
+                                <h3 class="event-title">🍹 Bars spécialisés & cocktails</h3>
                             </div>
-                            <span class="event-category">Cérémonie</span>
+                            <span class="event-category">Bar</span>
                         </div>
-                        <p class="event-description">Cérémonie de remise des prix du concours de cuisine et des meilleurs stands.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Scène principale</span>
-                            </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>1h00</span>
-                            </div>
-                        </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="addToCalendar('day3', '13:00', 'Remise des prix')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Ajouter au calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Savourez des cocktails originaux et des boissons rafraîchissantes préparés par des barmans experts.</p>
                     </div>
                 </div>
-
                 <div class="timeline-item">
                     <div class="timeline-marker"></div>
-                    <div class="timeline-time">15:00</div>
+                    <div class="timeline-time">Après-midi & Soirée</div>
                     <div class="timeline-content">
                         <div class="event-header">
                             <div>
-                                <h3 class="event-title">🎉 Grande fête de clôture</h3>
+                                <h3 class="event-title">🎧 DJ & animations musicales</h3>
                             </div>
-                            <span class="event-category">Fête</span>
+                            <span class="event-category">Animation</span>
                         </div>
-                        <p class="event-description">Grande fête de clôture avec musique, danse et dégustation finale.</p>
-                        <div class="event-details">
-                            <div class="event-detail">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Espace festif</span>
+                        <p class="event-description">Ambiance festive assurée avec des DJ, des groupes live et des animations musicales tout au long du festival.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">Toute la journée</div>
+                    <div class="timeline-content">
+                        <div class="event-header">
+                            <div>
+                                <h3 class="event-title">🍽️ Expériences culinaires immersives</h3>
                             </div>
-                            <div class="event-detail">
-                                <i class="fas fa-clock"></i>
-                                <span>3h00</span>
+                            <span class="event-category">Expérience</span>
+                        </div>
+                        <p class="event-description">Participez à des dégustations, démonstrations et ateliers pour vivre la cuisine autrement.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-time">Matin & Après-midi</div>
+                    <div class="timeline-content">
+                        <div class="event-header">
+                            <div>
+                                <h3 class="event-title">👧 Activités pour enfants</h3>
                             </div>
+                            <span class="event-category">Famille</span>
                         </div>
-                        <div class="event-actions">
-                            <button class="btn-primary" onclick="addToCalendar('day3', '15:00', 'Grande fête de clôture')">
-                                <i class="fas fa-calendar-plus"></i>
-                                Ajouter au calendrier
-                            </button>
-                        </div>
+                        <p class="event-description">Ateliers de cuisine, jeux, spectacles et animations spécialement conçus pour les plus jeunes.</p>
                     </div>
                 </div>
             </div>
@@ -421,13 +256,13 @@
         <div class="info-grid">
             <div class="info-card" style="color: white !important; background: linear-gradient(135deg, #219EBC, #00B894) !important;">
                 <div class="info-icon" style="color: white !important;">
-                    <i class="fas fa-calendar-alt"></i>
+                    <i class="fas fa-phone-alt"></i>
                 </div>
-                <h3 class="info-title" style="color: white !important;">Dates & Horaires</h3>
+                <h3 class="info-title" style="color: white !important;">Contact</h3>
                 <div class="info-details" style="color: white !important;">
-                    Du 15 au 17 Mars 2025<br>
-                    10h00 - 22h00<br>
-                    Entrée gratuite
+                    +229 21 30 12 34<br>
+                    info@eatdrink-festival.bj<br>
+                    Support en ligne 24/7
                 </div>
             </div>
             <div class="info-card" style="color: white !important; background: linear-gradient(135deg, #219EBC, #00B894) !important;">
@@ -452,20 +287,11 @@
                     Places limitées
                 </div>
             </div>
-            <div class="info-card" style="color: white !important; background: linear-gradient(135deg, #219EBC, #00B894) !important;">
-                <div class="info-icon" style="color: white !important;">
-                    <i class="fas fa-phone-alt"></i>
-                </div>
-                <h3 class="info-title" style="color: white !important;">Contact</h3>
-                <div class="info-details" style="color: white !important;">
-                    +229 21 30 12 34<br>
-                    info@eatdrink-festival.bj<br>
-                    Support en ligne 24/7
-                </div>
-            </div>
         </div>
     </div>
 </section>
-@endsection 
+@endsection
+
+@section('main_padding', '0px') 
  
  

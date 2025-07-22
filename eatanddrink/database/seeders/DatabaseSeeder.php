@@ -41,5 +41,25 @@ class DatabaseSeeder extends Seeder
             'role' => User::ROLE_ENTREPRENEUR,
             'statut' => User::STATUT_APPROUVE,
         ]);
+
+        // Créer un deuxième administrateur de test
+        User::create([
+            'name' => 'Super Admin',
+            'company_name' => 'Direction Eat&Drink',
+            'email' => 'superadmin@eatanddrink.com',
+            'password' => bcrypt('superadmin456'),
+            'role' => User::ROLE_ADMIN,
+            'statut' => User::STATUT_APPROUVE,
+        ]);
+        User::firstOrCreate(
+            ['email' => 'nouveladmin@eatanddrink.com'],
+            [
+                'name' => 'Nom Admin',
+                'company_name' => 'Administration Eat&Drink',
+                'password' => bcrypt('motdepassefort'),
+                'role' => User::ROLE_ADMIN,
+                'statut' => User::STATUT_APPROUVE,
+            ]
+        );
     }
 }

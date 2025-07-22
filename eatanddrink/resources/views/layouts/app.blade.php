@@ -59,14 +59,21 @@
                 <nav class="nav-menu">
                     @auth
                         @if(auth()->user()->role === 'admin')
-                            <li><a href="{{ route('admin.dashboard') }}">Dashboard Admin</a></li>
-                            <li><a href="{{ route('admin.demandes') }}">Gestion Demandes</a></li>
-                        @elseif(auth()->user()->role === 'entrepreneur')
-                            <li><a href="{{ route('entrepreneur.dashboard') }}">Mon Tableau de Bord</a></li>
-                            <li><a href="{{ route('entrepreneur.produits.index') }}">Mes Produits</a></li>
-                        @else
                             <li><a href="{{ route('home') }}">Accueil</a></li>
                             <li><a href="{{ route('exposants') }}">Nos Exposants</a></li>
+                            <li><a href="{{ route('programme') }}">Programme</a></li>
+                            <li><a href="{{ route('admin.dashboard') }}">Dashboard Admin</a></li>
+                        @elseif(auth()->user()->role === 'entrepreneur' && auth()->user()->statut === 'approuve')
+                            <li><a href="{{ route('home') }}">Accueil</a></li>
+                            <li><a href="{{ route('exposants') }}">Nos Exposants</a></li>
+                            <li><a href="{{ route('programme') }}">Programme</a></li>
+                            <li><a href="{{ route('entrepreneur.dashboard') }}">Mon Tableau de Bord</a></li>
+                        @elseif(auth()->user()->role === 'entrepreneur')
+                            <li><a href="{{ route('entrepreneur.statut') }}">Statut</a></li>
+                        @elseif(auth()->user()->role === 'participant')
+                            <li><a href="{{ route('home') }}">Accueil</a></li>
+                            <li><a href="{{ route('exposants') }}">Nos Exposants</a></li>
+                            <li><a href="{{ route('programme') }}">Programme</a></li>
                         @endif
                     @else
                         <li><a href="{{ route('home') }}">Accueil</a></li>
@@ -96,7 +103,7 @@
         </header>
 
         <!-- Page Content -->
-        <main>
+        <main style="padding-top:@yield('main_padding', '80px');">
             @yield('content')
         </main>
 

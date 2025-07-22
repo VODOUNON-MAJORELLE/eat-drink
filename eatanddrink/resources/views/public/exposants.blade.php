@@ -1,42 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<main style="padding-top:0 !important;">
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section" style="margin-top:0 !important; padding-top:4rem !important; padding-bottom:4rem !important; min-height:300px;">
         <div class="hero-content">
             <h1>🍽️ Nos Exposants</h1>
             <p>Découvrez les stands et entrepreneurs qui participent au festival</p>
         </div>
     </section>
 
-    <!-- Filtres et recherche -->
-    <section class="filters-section">
-    <div class="filters-container" style="justify-content:center; align-items:center; gap:2rem; flex-wrap:wrap;">
-        <form method="GET" action="{{ route('exposants') }}" class="search-box" style="flex:1; min-width:300px; position:relative; max-width:400px;">
-            <input type="text" name="q" value="{{ request('q') }}" placeholder="Rechercher un exposant..." style="width:100%; padding:1rem 3rem 1rem 1rem; border:2px solid rgba(255,107,53,0.2); border-radius:25px; font-size:1rem; transition:all 0.3s ease; box-shadow:0 2px 10px rgba(255,107,53,0.05);">
-            <i class="fas fa-search" style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); color:var(--gray-dark); opacity:0.6;"></i>
-            </form>
-        <form method="GET" action="{{ route('exposants') }}" class="filter-options" style="display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
-            <select name="categorie" onchange="this.form.submit()" style="padding:1rem; border:2px solid rgba(255,107,53,0.2); border-radius:25px; font-size:1rem; background:white; min-width:200px;">
-                    <option value="">Toutes les catégories</option>
-                <option value="restaurant" {{ request('categorie') == 'restaurant' ? 'selected' : '' }}>Restaurant</option>
-                <option value="catering" {{ request('categorie') == 'catering' ? 'selected' : '' }}>Traiteur</option>
-                <option value="bakery" {{ request('categorie') == 'bakery' ? 'selected' : '' }}>Boulangerie/Pâtisserie</option>
-                <option value="beverages" {{ request('categorie') == 'beverages' ? 'selected' : '' }}>Boissons/Cocktails</option>
-                <option value="street-food" {{ request('categorie') == 'street-food' ? 'selected' : '' }}>Street Food</option>
-                <option value="artisan" {{ request('categorie') == 'artisan' ? 'selected' : '' }}>Artisan culinaire</option>
-                </select>
-            <select name="sort" onchange="this.form.submit()" style="padding:1rem; border:2px solid rgba(255,107,53,0.2); border-radius:25px; font-size:1rem; background:white; min-width:200px;">
-                <option value="nom" {{ request('sort') == 'nom' ? 'selected' : '' }}>Trier par nom</option>
-                <option value="popularity" {{ request('sort') == 'popularity' ? 'selected' : '' }}>Trier par popularité</option>
-                <option value="note" {{ request('sort') == 'note' ? 'selected' : '' }}>Trier par note</option>
-                </select>
-            </form>
-        </div>
-    </section>
-
     <!-- Grille des exposants -->
-    <section class="exposants-section" style="padding:3rem 0;">
+    <section class="exposants-section" style="padding:3rem 0; min-height:80vh;">
         <div class="exposants-container" style="padding:0 2rem;">
             <div class="results-info">
                 <div class="results-count">
@@ -104,6 +79,7 @@
             </div>
         </div>
     </section>
+</main>
 <style>
 :root {
     --orange-primary: #FF6B35;

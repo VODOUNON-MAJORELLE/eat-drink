@@ -29,6 +29,7 @@ class User extends Authenticatable
         'specialties',
         'description',
         'experience',
+        'statut',
     ];
 
     /**

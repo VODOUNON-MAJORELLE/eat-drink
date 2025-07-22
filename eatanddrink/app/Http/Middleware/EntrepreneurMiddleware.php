@@ -13,16 +13,15 @@ class EntrepreneurMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle($request, Closure $next)
     {
-        if (!auth()->check()) {
-            return redirect()->route('login');
+        $user = auth()->user();
+        // Si l'utilisateur est entrepreneur mais n'est pas approuvé, il ne peut accéder qu'à la page statut
+        if ($user && $user->role === 'entrepreneur' && $user->statut !== 'approuve') {
+            if (!$request->routeIs('entrepreneur.statut')) {
+                return redirect()->route('entrepreneur.statut');
+            }
         }
-
-        if (!auth()->user()->isEntrepreneurApprouve()) {
-            return redirect()->route('entrepreneur.statut')->with('error', 'Votre demande de stand n\'est pas encore approuvée.');
-        }
-
         return $next($request);
     }
 } 

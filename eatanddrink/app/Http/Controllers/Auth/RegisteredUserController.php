@@ -57,6 +57,7 @@ class RegisteredUserController extends Controller
         // Créer la demande de stand
         $stand = Stand::create([
             'user_id' => $user->id,
+            'nom_stand' => $request->company_name,
             'size' => $request->stand_size ?? 'medium',
             'status' => 'pending',
             'request_date' => now(),
@@ -67,5 +68,37 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect()->route('entrepreneur.statut');
+    }
+
+    /**
+     * Affiche le formulaire d'inscription utilisateur simple.
+     */
+    public function showUserForm(): View
+    {
+        return view('auth.register_user');
+    }
+
+    /**
+     * Traite l'inscription d'un utilisateur simple (visiteur).
+     */
+    public function registerUser(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'confirmed', \Illuminate\Validation\Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'participant', // valeur ENUM correcte
+        ]);
+
+        event(new Registered($user));
+        Auth::login($user);
+        return redirect()->route('home')->with('success', 'Inscription réussie, bienvenue !');
     }
 }

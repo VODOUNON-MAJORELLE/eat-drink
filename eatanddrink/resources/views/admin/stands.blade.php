@@ -65,7 +65,7 @@
                                 </div>
 
                                 <div class="mt-4 flex justify-end">
-                                    <a href="{{ route('public.stand', $stand->id) }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                    <a href="{{ route('stand.show', $stand->id) }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
                                         Voir le stand →
                                     </a>
                                 </div>

@@ -74,4 +74,17 @@
         @endif
     </div>
 </section>
-@endsection 
+@endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[action*="commande"]');
+    if(form) {
+        form.addEventListener('submit', function() {
+            window.dispatchEvent(new Event('cart:reset'));
+        });
+    }
+});
+</script>
+@endpush 

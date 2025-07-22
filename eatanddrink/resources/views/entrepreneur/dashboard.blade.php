@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="ml-4">
                                     <p class="text-sm font-medium text-orange-600">Revenus Totaux</p>
-                                    <p class="text-2xl font-semibold text-orange-900">{{ number_format($stats['revenus_totaux'], 2, ',', ' ') }} €</p>
+                                    <p class="text-2xl font-semibold text-orange-900">{{ number_format($stats['revenus_totaux'], 2, ',', ' ') }} F CFA</p>
                                 </div>
                             </div>
                         </div>

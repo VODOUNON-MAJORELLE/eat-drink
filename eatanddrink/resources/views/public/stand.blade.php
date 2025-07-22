@@ -47,4 +47,53 @@
 <a href="{{ route('panier') }}" class="floating-cart" style="position:fixed;bottom:2rem;right:2rem;background:#FF6B35;color:white;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 4px 20px rgba(255,107,53,0.3);cursor:pointer;transition:all 0.3s ease;z-index:1000;">
     <i class="fas fa-shopping-cart"></i>
 </a>
-@endsection 
+@endsection
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('form[action*="panier/ajouter"]').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name=\'csrf-token\']').getAttribute('content')
+                },
+                body: data
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.success) {
+                    // Mettre à jour le badge panier dynamiquement
+                    window.dispatchEvent(new CustomEvent('cart:updated', { detail: { count: result.cart_count } }));
+                    // Notification style Laravel
+                    let notif = document.createElement('div');
+                    notif.id = 'notif-success';
+                    notif.style = 'position:fixed;top:30px;right:30px;z-index:2000;background:#4CAF50;color:white;padding:1.2rem 2.2rem;border-radius:12px;box-shadow:0 4px 20px rgba(76,175,80,0.15);font-size:1.1rem;font-weight:600;display:flex;align-items:center;gap:0.7rem;animation:fadeInNotif 0.3s;';
+                    notif.innerHTML = '<i class="fas fa-check-circle" style="font-size:1.5rem;"></i> ' + (result.message || 'Produit ajouté au panier !');
+                    document.body.appendChild(notif);
+                    setTimeout(() => {
+                        if(notif) notif.style.display = 'none';
+                    }, 3500);
+                    // Animation CSS
+                    if(!document.getElementById('notif-fadein-keyframes')) {
+                        let style = document.createElement('style');
+                        style.id = 'notif-fadein-keyframes';
+                        style.textContent = '@keyframes fadeInNotif { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }';
+                        document.head.appendChild(style);
+                    }
+                } else {
+                    alert(result.message || 'Erreur lors de l\'ajout au panier');
+                }
+            })
+            .catch(() => {
+                alert('Erreur lors de l\'ajout au panier');
+            });
+        });
+    });
+});
+</script>
+@endpush 

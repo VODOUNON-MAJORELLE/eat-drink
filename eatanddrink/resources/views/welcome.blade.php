@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" style="margin-top:0 !important; padding-top:4rem !important; padding-bottom:4rem !important; min-height:320px;">
         <div class="hero-content">
             <h1>🎪 EAT&DRINK Festival</h1>
             <p>Découvrez les saveurs du monde dans une atmosphère festive et colorée. Le plus grand événement culinaire de Cotonou vous attend !</p>
@@ -23,40 +23,13 @@
         </div>
     </section>
 
-    <!-- Statistiques -->
-    <section class="stats-section">
-        <div class="stats-container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="stat-number" id="stands-count">{{ $standsCount ?? '150+' }}</div>
-                    <div class="stat-label">Stands Culinaires</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <div class="stat-number" id="products-count">{{ $productsCount ?? '500+' }}</div>
-                    <div class="stat-label">Plats & Boissons</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-number" id="visitors-count">50K+</div>
-                    <div class="stat-label">Visiteurs Attendus</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <div class="stat-number" id="countries-count">25+</div>
-                    <div class="stat-label">Cuisines du Monde</div>
-                </div>
-            </div>
-        </div>
+    <!-- Présentation événement -->
+    <section class="event-description" style="padding:2.5rem 0;text-align:center;max-width:800px;margin:0 auto;">
+        <h2 style="font-size:2rem;font-weight:700;color:#FF6B35;margin-bottom:1.5rem;">Un rendez-vous culinaire unique à Cotonou</h2>
+        <p style="font-size:1.15rem;color:#333;line-height:1.7;">
+            Le festival EAT&DRINK rassemble chaque année des passionnés de gastronomie, des chefs talentueux et des entrepreneurs culinaires venus de tous horizons. Profitez d'une ambiance festive, de découvertes gustatives, d'animations pour petits et grands, et de rencontres inoubliables autour de la cuisine du monde.<br><br>
+            Rejoignez-nous pour célébrer la diversité culinaire, soutenir les talents locaux et vivre une expérience gourmande hors du commun !
+        </p>
     </section>
 
     <!-- Catégories -->
@@ -71,7 +44,6 @@
                 <div class="category-content">
                     <h3 class="category-title">Cuisine Européenne</h3>
                     <p class="category-description">Pizza, pâtes, crêpes et spécialités méditerranéennes</p>
-                    <span class="category-count">25 stands</span>
                 </div>
             </div>
             <div class="category-card">
@@ -79,7 +51,6 @@
                 <div class="category-content">
                     <h3 class="category-title">Cuisine Africaine</h3>
                     <p class="category-description">Plats traditionnels et saveurs authentiques du continent</p>
-                    <span class="category-count">40 stands</span>
                 </div>
             </div>
             <div class="category-card">
@@ -87,7 +58,6 @@
                 <div class="category-content">
                     <h3 class="category-title">Cuisine Asiatique</h3>
                     <p class="category-description">Sushi, nouilles, curry et délices orientaux</p>
-                    <span class="category-count">30 stands</span>
                 </div>
             </div>
             <div class="category-card">
@@ -95,7 +65,6 @@
                 <div class="category-content">
                     <h3 class="category-title">Cuisine Latino</h3>
                     <p class="category-description">Tacos, empanadas et saveurs d'Amérique latine</p>
-                    <span class="category-count">20 stands</span>
                 </div>
             </div>
             <div class="category-card">
@@ -103,7 +72,6 @@
                 <div class="category-content">
                     <h3 class="category-title">Boissons & Cocktails</h3>
                     <p class="category-description">Jus frais, cocktails et boissons du monde</p>
-                    <span class="category-count">25 stands</span>
                 </div>
             </div>
             <div class="category-card">
@@ -111,7 +79,6 @@
                 <div class="category-content">
                     <h3 class="category-title">Desserts & Pâtisseries</h3>
                     <p class="category-description">Gâteaux, chocolats et douceurs sucrées</p>
-                    <span class="category-count">15 stands</span>
                 </div>
             </div>
         </div>
@@ -204,3 +171,36 @@
         </div>
     </section>
 @endsection
+
+@section('main_padding', '24px')
+
+<style>
+.info-card {
+    background: linear-gradient(135deg, #219EBC, #00B894) !important;
+    color: #fff !important;
+    box-shadow: 0 10px 30px rgba(33, 158, 188, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+}
+.info-card * {
+    color: #fff !important;
+}
+.info-icon {
+    color: #fff !important;
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+}
+.info-title {
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.info-details {
+    color: #fff !important;
+    font-size: 1.1rem;
+    opacity: 0.95;
+    line-height: 1.8;
+}
+</style>

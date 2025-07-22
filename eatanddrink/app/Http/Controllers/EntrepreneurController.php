@@ -95,7 +95,7 @@ class EntrepreneurController extends Controller
 
         Product::create($data);
 
-        return redirect()->route('entrepreneur.produits')
+        return redirect()->route('entrepreneur.produits.index')
             ->with('success', 'Produit créé avec succès.');
     }
 
@@ -152,7 +152,7 @@ class EntrepreneurController extends Controller
 
         $produit->update($data);
 
-        return redirect()->route('entrepreneur.produits')
+        return redirect()->route('entrepreneur.produits.index')
             ->with('success', 'Produit mis à jour avec succès.');
     }
 
@@ -172,7 +172,7 @@ class EntrepreneurController extends Controller
 
         $produit->delete();
 
-        return redirect()->route('entrepreneur.produits')
+        return redirect()->route('entrepreneur.produits.index')
             ->with('success', 'Produit supprimé avec succès.');
     }
 

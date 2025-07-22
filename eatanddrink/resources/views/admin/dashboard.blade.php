@@ -48,7 +48,7 @@
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="stat-number" id="total-revenue">{{ $stats['chiffre_affaires'] ?? '0' }}</div>
-                    <div class="stat-label">FCFA de chiffre d'affaires</div>
+                    <div class="stat-label">de chiffre d'affaires attendue</div>
                 </div>
             </div>
 

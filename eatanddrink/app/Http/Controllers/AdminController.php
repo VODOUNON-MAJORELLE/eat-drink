@@ -18,22 +18,25 @@ class AdminController extends Controller
      */
     public function dashboard()
     {
-        // Statistiques pour le dashboard
+        // Stands actifs : stands dont l'utilisateur est approuvé
+        $activeStands = Stand::whereHas('user', function($q) {
+            $q->where('statut', 'approuve');
+        })->count();
+
+        // Demandes en attente : entrepreneurs en attente
+        $pendingRequests = User::where('role', 'entrepreneur')->where('statut', 'en_attente')->get();
+        $approvedRequests = User::where('role', 'entrepreneur')->where('statut', 'approuve')->get();
+        $rejectedRequests = User::where('role', 'entrepreneur')->where('statut', 'rejete')->get();
+
         $stats = [
-            'total_entrepreneurs' => User::where('role', '!=', 'admin')->count(),
-            'demandes_en_attente' => User::where('role', 'participant')->count(),
-            'entrepreneurs_approuves' => User::where('role', 'entrepreneur')->count(),
-            'total_stands' => Stand::count(),
+            'total_entrepreneurs' => User::where('role', 'entrepreneur')->count(),
+            'demandes_en_attente' => $pendingRequests->count(),
+            'entrepreneurs_approuves' => $approvedRequests->count(),
+            'total_stands' => $activeStands,
             'total_commandes' => Order::count(),
-            // Ajout de stats fictives pour le front
             'chiffre_affaires' => '15.2M FCFA',
             'visiteurs' => 8234,
         ];
-
-        // Demandes
-        $pendingRequests = User::where('role', 'participant')->get();
-        $approvedRequests = User::where('role', 'entrepreneur')->get();
-        $rejectedRequests = User::where('role', 'rejected')->get(); // à adapter si tu as un champ statut
 
         // Commandes (exemple simplifié)
         $orders = Order::with(['stand', 'user'])->orderBy('date_commande', 'desc')->limit(20)->get();
@@ -73,14 +76,14 @@ class AdminController extends Controller
 
             $user = User::findOrFail($userId);
             
-            if ($user->role !== 'participant') {
+            if (!in_array($user->role, ['participant', 'entrepreneur']) || $user->statut === 'approuve') {
                 return back()->with('error', 'Cette demande ne peut pas être approuvée.');
             }
 
             // Mettre à jour le rôle et le statut
             $user->update([
                 'role' => 'entrepreneur',
-                // 'statut' => 'approuve', // décommente si le champ existe encore
+                'statut' => 'approuve',
             ]);
 
             // Créer un stand pour cet utilisateur s'il n'en a pas
@@ -122,7 +125,7 @@ class AdminController extends Controller
             }
 
             $user->update([
-                // 'statut' => 'rejete', // décommente si le champ existe encore
+                'statut' => 'rejete',
             ]);
 
             // Envoyer un email de notification

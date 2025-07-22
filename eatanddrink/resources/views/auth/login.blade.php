@@ -13,7 +13,7 @@
                 <div class="form-group @error('role') error @enderror">
                     <label for="role">Je me connecte en tant que</label>
                     <select id="role" name="role" required style="width:100%; padding:1rem; border-radius:10px;">
-                        <option value="visitor" {{ old('role') == 'visitor' ? 'selected' : '' }}>Visiteur</option>
+                        <option value="participant" {{ old('role') == 'participant' ? 'selected' : '' }}>Visiteur</option>
                         <option value="entrepreneur" {{ old('role') == 'entrepreneur' ? 'selected' : '' }}>Entrepreneur</option>
                         <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrateur</option>
                     </select>
@@ -42,8 +42,11 @@
                 <div class="signup-section">
                     <h3>Pas encore de compte ?</h3>
                     <div class="signup-options">
-                        <a href="{{ route('register') }}" class="btn-outline">
+                        <a href="{{ route('register') }}" class="btn-orange">
                             <i class="fas fa-store"></i> S'inscrire comme entrepreneur
+                        </a>
+                        <a href="{{ route('register.user') }}" class="btn-orange" style="margin-top:1rem;">
+                            <i class="fas fa-user"></i> S'inscrire comme utilisateur
                         </a>
                     </div>
                 </div>
@@ -89,3 +92,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 @endsection
+
+<style>
+.btn-orange {
+    background: #FF6B35 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-block;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(255,107,53,0.08);
+    margin-bottom: 0.5rem;
+}
+.btn-orange:hover, .btn-orange:focus {
+    background: #d35400 !important;
+    color: #fff !important;
+    text-decoration: none;
+}
+</style>

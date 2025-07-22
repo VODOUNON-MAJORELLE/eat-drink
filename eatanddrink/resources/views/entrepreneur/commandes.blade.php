@@ -54,12 +54,12 @@
                                                     @endif
                                                     <div>
                                                         <p class="font-medium text-gray-900">{{ $details['nom'] }}</p>
-                                                        <p class="text-sm text-gray-600">{{ number_format($details['prix'], 2, ',', ' ') }} €</p>
+                                                        <p class="text-sm text-gray-600">{{ number_format($details['prix'], 2, ',', ' ') }} F CFA</p>
                                                     </div>
                                                 </div>
                                                 <div class="text-right">
                                                     <p class="font-medium text-gray-900">{{ $details['quantite'] }}x</p>
-                                                    <p class="text-sm text-gray-600">{{ number_format($details['prix'] * $details['quantite'], 2, ',', ' ') }} €</p>
+                                                    <p class="text-sm text-gray-600">{{ number_format($details['prix'] * $details['quantite'], 2, ',', ' ') }} F CFA</p>
                                                 </div>
                                             </div>
                                         @endforeach

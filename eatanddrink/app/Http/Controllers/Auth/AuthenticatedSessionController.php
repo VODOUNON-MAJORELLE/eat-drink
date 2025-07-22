@@ -61,7 +61,7 @@ class AuthenticatedSessionController extends Controller
     public function loginMulti(Request $request)
     {
         $request->validate([
-            'role' => 'required|in:visitor,entrepreneur,admin',
+            'role' => 'required|in:participant,entrepreneur,admin',
             'email' => 'required|email',
             'password' => 'required',
         ]);
@@ -78,7 +78,7 @@ class AuthenticatedSessionController extends Controller
             } elseif ($role === 'entrepreneur') {
                 return redirect()->route('entrepreneur.statut');
             } else {
-                return redirect()->route('dashboard'); // ou une route visiteur spécifique
+                return redirect()->route('home'); // Redirige le participant vers l'accueil
             }
         }
 

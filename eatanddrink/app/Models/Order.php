@@ -40,6 +40,14 @@ class Order extends Model
     }
 
     /**
+     * Relation avec l'utilisateur (auteur de la commande)
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
      * Accesseur pour formater la date de commande
      */
     public function getDateCommandeFormateeAttribute(): string

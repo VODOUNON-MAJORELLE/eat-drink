@@ -23,7 +23,7 @@
                                     </div>
                                     <div class="text-right">
                                         <p class="text-lg font-bold text-green-600">
-                                            {{ $stand->orders->sum('total') ? number_format($stand->orders->sum('total'), 2, ',', ' ') . ' €' : '0,00 €' }}
+                                            {{ $stand->orders->sum('total') ? number_format($stand->orders->sum('total'), 2, ',', ' ') . ' F CFA' : '0,00 F CFA' }}
                                         </p>
                                         <p class="text-sm text-gray-600">{{ $stand->orders->count() }} commande(s)</p>
                                     </div>
@@ -49,7 +49,7 @@
                                                         @foreach($commande->details_commande as $produitId => $details)
                                                             <div class="flex justify-between items-center text-sm">
                                                                 <span class="text-gray-600">{{ $details['nom'] }} (x{{ $details['quantite'] }})</span>
-                                                                <span class="font-medium">{{ number_format($details['prix'] * $details['quantite'], 2, ',', ' ') }} €</span>
+                                                                <span class="font-medium">{{ number_format($details['prix'] * $details['quantite'], 2, ',', ' ') }} F CFA</span>
                                                             </div>
                                                         @endforeach
                                                     </div>
@@ -84,7 +84,7 @@
                                 <p class="text-sm text-blue-800">Total commandes</p>
                             </div>
                             <div class="text-center">
-                                <p class="text-2xl font-bold text-blue-600">{{ number_format($stands->sum(function($stand) { return $stand->orders->sum('total'); }), 2, ',', ' ') }} €</p>
+                                <p class="text-2xl font-bold text-blue-600">{{ number_format($stands->sum(function($stand) { return $stand->orders->sum('total'); }), 2, ',', ' ') }} F CFA</p>
                                 <p class="text-sm text-blue-800">Chiffre d'affaires</p>
                             </div>
                         </div>

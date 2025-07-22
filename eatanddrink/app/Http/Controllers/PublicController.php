@@ -144,6 +144,22 @@ class PublicController extends Controller
 
         session()->put('panier', $panier);
 
+        // Calculer le nombre total d'articles dans le panier
+        $cart_count = 0;
+        foreach ($panier as $standData) {
+            foreach ($standData['produits'] as $item) {
+                $cart_count += $item['quantite'];
+            }
+        }
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'cart_count' => $cart_count,
+                'message' => $produit->nom . ' ajouté au panier !'
+            ]);
+        }
+
         return back()->with('success', $produit->nom . ' ajouté au panier.');
     }
 

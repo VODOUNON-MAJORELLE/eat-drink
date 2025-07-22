@@ -50,7 +50,7 @@ body {
 }
 
 main, .status-section {
-    padding-top: 90px;
+    padding-top: 40px;
 }
 
 .header, .hero, .join-section, .categories-section, .stats-section, .info-section, .footer {
@@ -745,7 +745,7 @@ body {
 .info-section {
     background: var(--white);
     padding: 4rem 0;
-    margin-top: 3rem;
+    margin-top: 30px !important;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -1320,7 +1320,6 @@ body {
     z-index: 2;
     min-height: 200px;
     margin-top: 100px !important;
-    border: 3px dashed red !important;
 }
 
 .info-section * {

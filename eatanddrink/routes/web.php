@@ -8,37 +8,32 @@ use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
+// Accès public : accueil, connexion, inscription
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
 require __DIR__.'/auth.php';
+Route::get('/register/user', [App\Http\Controllers\Auth\RegisteredUserController::class, 'showUserForm'])->name('register.user');
+Route::post('/register/user', [App\Http\Controllers\Auth\RegisteredUserController::class, 'registerUser']);
 
-// Routes publiques
-Route::get('/exposants', [PublicController::class, 'exposants'])->name('exposants');
-Route::get('/exposants/{id}', [PublicController::class, 'stand'])->name('stand.show');
-Route::get('/programme', [PublicController::class, 'programme'])->name('programme');
-Route::get('/ateliers', [WorkshopController::class, 'index'])->name('workshops.index');
-Route::get('/ateliers/{id}', [WorkshopController::class, 'show'])->name('workshops.show');
-Route::post('/ateliers/inscription', [WorkshopController::class, 'register'])->name('workshops.register');
-Route::get('/calendrier', [WorkshopController::class, 'calendar'])->name('calendar');
-Route::post('/calendrier/ajouter', [WorkshopController::class, 'addToCalendar'])->name('calendar.add');
-Route::get('/panier', [PublicController::class, 'panier'])->name('panier');
-Route::post('/panier/ajouter', [PublicController::class, 'ajouterAuPanier'])->name('panier.ajouter');
-Route::post('/panier/supprimer', [PublicController::class, 'supprimerDuPanier'])->name('panier.supprimer');
-Route::post('/panier/vider', [PublicController::class, 'viderPanier'])->name('panier.vider');
-Route::post('/commande', [PublicController::class, 'passerCommande'])->name('commande');
-Route::get('/recherche', [PublicController::class, 'rechercher'])->name('recherche');
+// Toutes les autres routes publiques nécessitent d'être connecté
+Route::middleware('auth')->group(function () {
+    Route::get('/exposants', [PublicController::class, 'exposants'])->name('exposants');
+    Route::get('/exposants/{id}', [PublicController::class, 'stand'])->name('stand.show');
+    Route::get('/programme', [PublicController::class, 'programme'])->name('programme');
+    Route::get('/ateliers', [WorkshopController::class, 'index'])->name('workshops.index');
+    Route::get('/ateliers/{id}', [WorkshopController::class, 'show'])->name('workshops.show');
+    Route::post('/ateliers/inscription', [WorkshopController::class, 'register'])->name('workshops.register');
+    Route::get('/calendrier', [WorkshopController::class, 'calendar'])->name('calendar');
+    Route::post('/calendrier/ajouter', [WorkshopController::class, 'addToCalendar'])->name('calendar.add');
+    Route::get('/panier', [PublicController::class, 'panier'])->name('panier');
+    Route::post('/panier/ajouter', [PublicController::class, 'ajouterAuPanier'])->name('panier.ajouter');
+    Route::post('/panier/supprimer', [PublicController::class, 'supprimerDuPanier'])->name('panier.supprimer');
+    Route::post('/panier/vider', [PublicController::class, 'viderPanier'])->name('panier.vider');
+    Route::post('/commande', [PublicController::class, 'passerCommande'])->name('commande');
+    Route::get('/recherche', [PublicController::class, 'rechercher'])->name('recherche');
+});
 
 // Routes admin (protégées par middleware admin)
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
