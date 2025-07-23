@@ -28,31 +28,31 @@
                     </div>
                     <div class="stat-number" id="total-stands">{{ $stats['total_stands'] ?? 0 }}</div>
                     <div class="stat-label">Stands actifs</div>
-                </div>
+                            </div>
                 <div class="stat-card">
                     <div class="stat-icon">
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-number" id="total-visitors">{{ number_format($stats['visiteurs'] ?? 0, 0, ',', ' ') }}</div>
                     <div class="stat-label">Visiteurs attendus</div>
-                </div>
+                            </div>
                 <div class="stat-card">
                     <div class="stat-icon">
                         <i class="fas fa-file-alt"></i>
                     </div>
                     <div class="stat-number" id="pending-requests">{{ $stats['demandes_en_attente'] ?? 0 }}</div>
                     <div class="stat-label">Demandes en attente</div>
-                </div>
+                            </div>
                 <div class="stat-card">
                     <div class="stat-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <div class="stat-number" id="total-revenue">{{ $stats['chiffre_affaires'] ?? '0' }}</div>
                     <div class="stat-label">de chiffre d'affaires attendue</div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Actions rapides -->
+                <!-- Actions rapides -->
             <div class="quick-actions">
                 <h3>⚡ Actions rapides</h3>
                 <div class="actions-grid">
@@ -83,9 +83,9 @@
                         </div>
                         <div class="action-title">Paramètres</div>
                         <div class="action-description">Configuration système</div>
-                    </a>
-                </div>
-            </div>
+                            </a>
+                        </div>
+                    </div>
 
             <!-- Demandes en attente -->
             <div class="pending-requests">
@@ -131,9 +131,9 @@
                 <a href="#contact">Contact</a>
                 <a href="#partenaires">Partenaires</a>
                 <a href="#mentions">Mentions légales</a>
-            </div>
+    </div>
             <p>&copy; 2025 Eat&Drink Festival. Tous droits réservés.</p>
-        </div>
+</div>
     </footer>
 </body>
 </html>
